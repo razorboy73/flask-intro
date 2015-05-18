@@ -1,11 +1,11 @@
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
-
+app.secret_key="secret"
 
 @app.route('/')
-def hello_world():
+def home():
     return 'Hello World!'
 
 @app.route('/welcome')
@@ -19,9 +19,14 @@ def login():
         if request.form['username'] != "admin" or request.form['password'] != "admin":
             error = "Invalid Credentials"
         else:
+            session['logged_in']=True
             return redirect((url_for('home')))
     return render_template("login.html", error=error)
 
 
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('welcome'))
 if __name__ == '__main__':
     app.run(debug=True)
