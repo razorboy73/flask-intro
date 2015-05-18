@@ -18,6 +18,7 @@
         <p><strong>Error: </strong>{{ error }}</p>
      {% endif %}
 
+
       {% for message in get_flashed_messages() %}
         {{ message }}
       {% endfor %}
