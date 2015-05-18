@@ -3,13 +3,14 @@ from flask import Flask, render_template, redirect, \
     url_for, request, session, flash, g
 from functools import wraps
 import sqlite3
+from os.path import realpath
 
 # create the application object
 app = Flask(__name__)
 
 # config
 app.secret_key = 'my precious'
-app.database = 'sample.db'
+app.database = "/Users/workhorse/flask-intro/sample.db"
 
 
 # login required decorator
@@ -31,7 +32,16 @@ def home():
     # return "Hello, World!"  # return a string
     g.db = connect_db()
     cur = g.db.execute('select * from posts')
-    posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
+    #print cur
+    #print cur.fetchall()
+    post_dict ={}
+    posts = []
+    for row in cur.fetchall():
+        post_dict["title"] = row[0]
+        post_dict["description"] = row[1]
+        posts.append(post_dict)
+        post_dict ={}
+    #posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
     g.db.close()
     return render_template('index.html', posts=posts)  # render a template
 
