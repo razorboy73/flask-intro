@@ -7,7 +7,7 @@ class BaseConfig(object):
         SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
 
 
-
+#export DATABASE_URL="postgresql://localhost/discover_flask_dev"
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
