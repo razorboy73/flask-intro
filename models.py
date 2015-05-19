@@ -2,7 +2,8 @@ __author__ = 'workhorse'
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from app import db, bcrypt
+from app import db
+from project.users.views import bcrypt
 
 
 
