@@ -1,7 +1,8 @@
 __author__ = 'workhorse'
+
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from app import db
+from app import db, bcrypt
 
 
 
@@ -12,10 +13,10 @@ class BlogPost(db.Model):
     description = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
 
-    def __init__(self, title, description):
+    def __init__(self, title, description, user_id):
         self.title = title
         self.description =description
-
+        self.user_id = user_id
 
     def __repr__(self):
         return "<title {}>".format(self.title)
@@ -32,7 +33,7 @@ class User(db.Model):
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
-        self.password = password
+        self.password = bcrypt.generate_password_hash(password)
 
 
     def __repr__(self):

@@ -1,8 +1,8 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template, redirect, \
     url_for, request, session, flash
-
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.bcrypt import Bcrypt
 from functools import wraps
 import os
 #import sqlite3
@@ -12,6 +12,7 @@ import os
 
 # create the application object
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 # config
 app.config.from_object(os.environ["APP_SETTINGS"])
