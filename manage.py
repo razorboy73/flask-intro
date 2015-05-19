@@ -1,6 +1,6 @@
 __author__ = 'workhorse'
 
-from app import app,db
+from project import app,db
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 import os

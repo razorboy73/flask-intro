@@ -1,5 +1,5 @@
 __author__ = 'workhorse'
-from app import app
+from project import app
 import unittest
 
 

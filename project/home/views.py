@@ -1,24 +1,18 @@
 ################################################
 # import the Flask class from the flask module #
 ################################################
-from flask import Flask, flash, redirect, session, url_for, render_template
-from flask.ext.sqlalchemy import SQLAlchemy
 from functools import wraps
-import os
+from flask import Blueprint,flash, redirect, session, url_for, render_template
+from project import app,db
+from project.models import BlogPost
 
 
-################################
-# create the application object
-################################
-app = Flask(__name__)
-app.config.from_object(os.environ["APP_SETTINGS"])
-db = SQLAlchemy(app)
+##########################
+#### Config ##############
+##########################
 
-from models import *
-from project.users.views import users_blueprint
-
-#register blue print
-app.register_blueprint(users_blueprint)
+home_blueprint = Blueprint('home', __name__,
+                            template_folder='templates')
 
 
 ###########################
@@ -36,23 +30,16 @@ def login_required(f):
 
 
 # use decorators to link the function to a url
-@app.route('/')
+@home_blueprint.route('/')
 @login_required
 def home():
     # return "Hello, World!"  # return a string
     posts = db.session.query(BlogPost).all()
     return render_template('index.html', posts=posts)  # render a templates
 
-@app.route('/welcome')
+@home_blueprint.route('/welcome')
 def welcome():
     return render_template('welcome.html')  # render a templates
 
 
 
-
-
-
-
-# start the server with the 'run()' method
-if __name__ == '__main__':
-    app.run(debug=True)

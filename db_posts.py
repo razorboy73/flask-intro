@@ -1,6 +1,6 @@
 __author__ = 'workhorse'
-from app import db
-from models import BlogPost
+from project import db
+from project.models import BlogPost
 
 
 
