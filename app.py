@@ -4,6 +4,7 @@ from flask import Flask, render_template, redirect, \
 
 from flask.ext.sqlalchemy import SQLAlchemy
 from functools import wraps
+import os
 #import sqlite3
 
 
@@ -13,8 +14,7 @@ from functools import wraps
 app = Flask(__name__)
 
 # config
-app.secret_key = 'my precious'
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
+app.config.from_object(os.environ["APP_SETTINGS"])
 
 #create the sqlalchemy object
 db = SQLAlchemy(app)
