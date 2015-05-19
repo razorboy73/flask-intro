@@ -28,7 +28,6 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     posts = relationship("BlogPost", backref="author",  lazy="dynamic")
-    favorite_color = db.Column(db.String)
 
     def __init__(self, name, email, password):
         self.name = name
