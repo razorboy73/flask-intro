@@ -6,6 +6,15 @@ class BaseConfig(object):
         SECRET_KEY = 'Ww\x96]\xfe\xa0_\x05\xc6\xd7wN\x05\x00 /\x97\xc9\xe3Rjp\xb2\xa5x\xe4"\xe6r\xf7\xc7w\xc5\x14G\xc2dp~7:\x9e\xa6U\xebL\xf1\xa1\x94]\xbb\xa0\x96T\x1c.'
         SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
 
+class TestConfig(BaseConfig):
+    DEBUG = True
+    TESTING = True
+    WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
+    #https://github.com/jarus/flask-testing/issues/21
+    #prevent AssertionError: Popped wrong request context.  (<RequestContext 'http://localhost/connect/signup' [POST] of run> instead of <RequestContext 'http://localhost/' [GET] of run>)
+
 
 #export DATABASE_URL="postgresql://localhost/discover_flask_dev"
 class DevelopmentConfig(BaseConfig):
