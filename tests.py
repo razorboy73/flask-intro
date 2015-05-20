@@ -68,6 +68,7 @@ class UsersViewsTests(BaseTestCase):
                 follow_redirects = True)
             self.assertIn(b'You were logged in.', response.data)
             self.assertTrue(current_user.name =="admin")
+            self.assertTrue(current_user.is_active())
 
 
     #ensure login prevents access with incorrect
@@ -92,6 +93,20 @@ class UsersViewsTests(BaseTestCase):
             follow_redirects = True)
         self.assertIn(b'Please log in to access this page.', response.data)
 
+    #ensure user can register
+    def test_user_can_register(self):
+        with self.client:
+            response = self.client.post(
+                '/register',
+                data = dict(username="leigh",
+                            email="leighstern@hotmail.com",
+                            password="Swingline1",
+                            confirm="Swingline1"
+                            ),
+                follow_redirects = True)
+            self.assertIn(b'Welcome to Flask!', response.data)
+            self.assertTrue(current_user.name =="leigh")
+            self.assertTrue(current_user.is_active())
 
 if __name__ == '__main__':
     unittest.main()
