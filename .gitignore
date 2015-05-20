@@ -41,7 +41,7 @@ nosetests.xml
 
 # Virtual environment
 venv
-
+coverage
 
 
 *.idea
