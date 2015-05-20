@@ -35,6 +35,7 @@ app.register_blueprint(home_blueprint)
 ########################
 
 from models import User
+login_manager.login_view = "users.login"
 
 @login_manager.user_loader
 def load_user(user_id):
