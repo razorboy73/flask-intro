@@ -2,8 +2,9 @@
 # import the Flask class from the flask module #
 ################################################
 from functools import wraps
-from flask import Blueprint,flash, redirect, session, url_for, render_template
-from project import app,db
+from flask import Blueprint, render_template
+from flask.ext.login import login_required
+from project import db
 from project.models import BlogPost
 
 
@@ -18,15 +19,16 @@ home_blueprint = Blueprint('home', __name__,
 ###########################
 # login required decorator#
 ###########################
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('users.login'))
-    return wrap
+#not needed if using flask-login
+#def login_required(f):
+#    @wraps(f)
+#    def wrap(*args, **kwargs):
+#       if 'logged_in' in session:
+#            return f(*args, **kwargs)
+#        else:
+#            flash('You need to login first.')
+#            return redirect(url_for('users.login'))
+#    return wrap
 
 
 # use decorators to link the function to a url
