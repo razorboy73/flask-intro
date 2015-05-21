@@ -36,7 +36,7 @@ class User(db.Model):
     confirmed_on = db.Column(db.DateTime, nullable=True)
     posts = relationship("BlogPost", backref="author",  lazy="dynamic")
 
-    def __init__(self, username, email, password, confirmed=False,
+    def __init__(self, username, email, password, confirmed,
                  paid=False,admin=False, confirmed_on=None):
         self.name = username
         self.email = email
