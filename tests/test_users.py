@@ -13,7 +13,7 @@ class TestUser(BaseTestCase):
         with self.client:
             response = self.client.post( '/register',data = dict(
                 username="leigh",email="leighstern@hotmail.com",
-                password="Swingline1",confirm="Swingline1"
+                password="Swingline1",confirm="Swingline1",confirmed = True
             ),follow_redirects = True)
             self.assertIn(b'Welcome to Flask!', response.data)
             self.assertTrue(current_user.name =="leigh")
@@ -41,7 +41,7 @@ class TestUser(BaseTestCase):
     def test_incorrect_user_registration(self):
         with self.client:
             response = self.client.post( '/register',data = dict(
-                username="leigh",email="leighstern",
+                username="joshuadgerbel",email="leighsternhotmail.com",
                 password="Swingline1",confirm="Swingline1"
             ),follow_redirects = True)
             self.assertIn(b'Invalid email address', response.data)

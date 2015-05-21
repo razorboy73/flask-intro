@@ -36,15 +36,15 @@ class User(db.Model):
     confirmed_on = db.Column(db.DateTime, nullable=True)
     posts = relationship("BlogPost", backref="author",  lazy="dynamic")
 
-    def __init__(self, name, email, password, confirmed,
-                 paid=False, admin=False, confirmed_on=None):
-        self.name = name
+    def __init__(self, username, email, password, confirmed=False):
+                 #paid=False,admin=False, confirmed_on=None)
+        self.name = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
-        self.registered_on = datetime.datetime.now()
-        self.admin = admin
+        #self.registered_on = datetime.datetime.now()
+        #self.admin = admin
         self.confirmed = confirmed
-        self.confirmed_on = confirmed_on
+        #self.confirmed_on = confirmed_on
 
     def is_authenticated(self):
         return True
