@@ -1,12 +1,12 @@
 ################################################
 # import the Flask class from the flask module #
 ################################################
-from functools import wraps
-from flask import Blueprint, render_template,request, flash,redirect, url_for
-from flask.ext.login import login_required, current_user
-from forms import MessageForm
-from project import db
-from project.models import BlogPost
+from functools import wraps # pragma: no cover
+from flask import Blueprint, render_template,request, flash,redirect, url_for # pragma: no cover
+from flask.ext.login import login_required, current_user # pragma: no cover
+from forms import MessageForm # pragma: no cover
+from project import db # pragma: no cover
+from project.models import BlogPost # pragma: no cover
 
 
 ##########################
@@ -14,7 +14,7 @@ from project.models import BlogPost
 ##########################
 
 home_blueprint = Blueprint('home', __name__,
-                            template_folder='templates')
+                            template_folder='templates') # pragma: no cover
 
 
 ###########################

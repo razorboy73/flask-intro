@@ -1,9 +1,9 @@
 __author__ = 'workhorse'
 
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
-from project import db
-from project import bcrypt
+from sqlalchemy import ForeignKey # pragma: no cover
+from sqlalchemy.orm import relationship # pragma: no cover
+from project import db # pragma: no cover
+from project import bcrypt # pragma: no cover
 
 
 
