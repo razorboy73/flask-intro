@@ -30,9 +30,9 @@ class User(db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    registered_on = db.Column(db.DateTime, nullable=True)
-    admin = db.Column(db.Boolean, nullable=True, default=False)
-    confirmed = db.Column(db.Boolean, nullable=True, default=False)
+    registered_on = db.Column(db.DateTime, nullable=False)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
+    confirmed = db.Column(db.Boolean, nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
     posts = relationship("BlogPost", backref="author",  lazy="dynamic")
 
