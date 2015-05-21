@@ -41,9 +41,9 @@ def cov():
 def create_admin():
     """Creates the admin user."""
     db.session.add(User(
-        name = "joshadmin",
-        email="ad@min1.com",
-        password="Swingline1",
+        username = "joshadmin22",
+        email="ad@min2.com",
+        password="Swingline12",
         admin=True,
         confirmed=True,
         confirmed_on=datetime.datetime.now())
