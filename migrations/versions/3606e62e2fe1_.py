@@ -1,14 +1,14 @@
-"""bcryptaddition migration
+"""empty message
 
-Revision ID: 1c77c4fee6c8
-Revises: 30a8c36ecc26
-Create Date: 2015-05-19 07:25:46.874684
+Revision ID: 3606e62e2fe1
+Revises: None
+Create Date: 2015-05-21 14:15:02.284376
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '1c77c4fee6c8'
-down_revision = '30a8c36ecc26'
+revision = '3606e62e2fe1'
+down_revision = None
 
 from alembic import op
 import sqlalchemy as sa

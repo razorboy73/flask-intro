@@ -6,6 +6,8 @@ from flask.ext.migrate import Migrate, MigrateCommand
 import os
 import unittest
 import coverage
+from project.models import User
+import datetime
 
 # config
 app.config.from_object(os.environ["APP_SETTINGS"])
@@ -34,6 +36,19 @@ def cov():
     covdir = os.path.join(basedir, 'coverage')
     cov.html_report(directory=covdir)
     cov.erase()
+
+@manager.command
+def create_admin():
+    """Creates the admin user."""
+    db.session.add(User(
+        name = "joshadmin",
+        email="ad@min1.com",
+        password="Swingline1",
+        admin=True,
+        confirmed=True,
+        confirmed_on=datetime.datetime.now())
+    )
+    db.session.commit()
 
 
 
