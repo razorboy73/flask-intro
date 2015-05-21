@@ -50,7 +50,7 @@ class User(db.Model):
 
 
     def __repr__(self):
-        return "<title {}>".format(self.name)
+        return "<name - {}>".format(self.name)
 
 
 
