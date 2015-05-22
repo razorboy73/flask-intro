@@ -52,7 +52,8 @@ def home():
         flash("New entry was successfully posted.  Thanks.")
         return redirect(url_for('home.home'))
     else:
-        posts = db.session.query(BlogPost).all()
+        posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
+        #posts = db.session.query(BlogPost).all()
     return render_template('index.html', form=form, posts=posts)  # render a templates
 
 @home_blueprint.route('/welcome')
