@@ -7,8 +7,8 @@ class BaseConfig(object):
     SECURITY_PASSWORD_SALT = 'my_precious_two'
     SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
     BCRYPT_LOG_ROUNDS = 13
-    WTF_CSRF_ENABLED = True
-    DEBUG_TB_ENABLED = False
+    WTF_CSRF_ENABLED = False
+    DEBUG_TB_ENABLED = True
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
@@ -32,12 +32,17 @@ class TestConfig(BaseConfig):
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     #https://github.com/jarus/flask-testing/issues/21
     #prevent AssertionError: Popped wrong request context.  (<RequestContext 'http://localhost/connect/signup' [POST] of run> instead of <RequestContext 'http://localhost/' [GET] of run>)
+    BCRYPT_LOG_ROUNDS = 1
 
 
 #export DATABASE_URL="postgresql://localhost/discover_flask_dev"
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-
+    WTF_CSRF_ENABLED = False
+    DEBUG_TB_ENABLED = True
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
+    DEBUG_TB_ENABLED = False
+    WTF_CSRF_ENABLED = True
+    SECRET_KEY = os.environ.get("SECRET_KEY")

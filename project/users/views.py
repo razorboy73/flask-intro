@@ -114,3 +114,15 @@ def unconfirmed():
         return redirect('main.home')
     flash('Please confirm your account!', 'warning')
     return render_template('unconfirmed.html')
+
+
+@users_blueprint.route('/resend')
+@login_required
+def resend_confirmation():
+    token = generate_confirmation_token(current_user.email)
+    confirm_url = url_for('users.confirm_email', token=token, _external=True)
+    html = render_template("activate.html", confirm_url=confirm_url)
+    subject = "Please confirm your email"
+    send_email(current_user.email, subject, html)
+    flash("A new confirmation email has been sent.","success")
+    return redirect(url_for("users.unconfirmed"))

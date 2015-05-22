@@ -5,6 +5,7 @@ from flask.ext.login import current_user, request
 from base import BaseTestCase
 from project import bcrypt
 from project.models import User
+from project.users.forms import RegisterForm, LoginForm
 
 
 class TestUser(BaseTestCase):
@@ -13,7 +14,7 @@ class TestUser(BaseTestCase):
         with self.client:
             response = self.client.post( '/register',data = dict(
                 username="leigh",email="leighstern@hotmail.com",
-                password="Swingline1",confirm="Swingline1",confirmed = True
+                password="Swingline1",confirm="Swingline1"
             ),follow_redirects = True)
             self.assertIn(b'You have not confirmed your account.', response.data)
             self.assertTrue(current_user.name =="leigh")
@@ -36,6 +37,17 @@ class TestUser(BaseTestCase):
         user = User.query.filter_by(email='ad@min.com').first()
         self.assertTrue(bcrypt.check_password_hash(user.password, 'admin'))
         self.assertFalse(bcrypt.check_password_hash(user.password, 'foobar'))
+
+
+    def test_validate_email_already_registered(self):
+        # Ensure user can't register when a duplicate email is used
+        form = RegisterForm(
+            email='ad@min.com',
+            password='admin',
+            confirm='admin'
+        )
+        self.assertFalse(form.validate())
+
 
         # Ensure errors upon incorrect registrations
     def test_incorrect_user_registration(self):
@@ -86,6 +98,19 @@ class UsersViewsTests(BaseTestCase):
             '/logout', data = dict(username="admin", password="admin"),
             follow_redirects = True)
         self.assertIn(b'Please log in to access this page.', response.data)
+
+
+class TestLoginForm(BaseTestCase):
+
+    def test_validate_success_login_form(self):
+        # Ensure correct data validates.
+        form = LoginForm(email='ad@min.com', password='admin')
+        self.assertTrue(form.validate())
+
+    def test_validate_invalid_email_format(self):
+        # Ensure invalid email format throws error.
+        form = LoginForm(email='unknown', password='example')
+        self.assertFalse(form.validate())
 
 if __name__ == "__main__":
     unittest.main()
