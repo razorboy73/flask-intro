@@ -15,7 +15,7 @@ class TestUser(BaseTestCase):
                 username="leigh",email="leighstern@hotmail.com",
                 password="Swingline1",confirm="Swingline1",confirmed = True
             ),follow_redirects = True)
-            self.assertIn(b'Welcome to Flask!', response.data)
+            self.assertIn(b'You have not confirmed your account.', response.data)
             self.assertTrue(current_user.name =="leigh")
             self.assertTrue(current_user.is_active())
             user = User.query.filter_by(email="leighstern@hotmail.com").first()
