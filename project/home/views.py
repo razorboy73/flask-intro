@@ -7,6 +7,7 @@ from flask.ext.login import login_required, current_user # pragma: no cover
 from forms import MessageForm # pragma: no cover
 from project import db # pragma: no cover
 from project.models import BlogPost # pragma: no cover
+from project.decorators import check_confirmed
 
 
 ##########################
@@ -35,6 +36,7 @@ home_blueprint = Blueprint('home', __name__,
 # use decorators to link the function to a url
 @home_blueprint.route('/', methods = ["GET", "POST"])
 @login_required
+@check_confirmed
 def home():
     # return "Hello, World!"  # return a string
     error = None

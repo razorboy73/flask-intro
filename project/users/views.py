@@ -4,11 +4,14 @@
 
 from flask import flash, redirect, render_template, request,\
      url_for, Blueprint # pragma: no cover
-from flask.ext.login import login_user,login_required, logout_user # pragma: no cover
+from flask.ext.login import login_user,login_required, logout_user, current_user # pragma: no cover
 #from functools import wraps - not needed with flask login
 from forms import LoginForm, RegisterForm # pragma: no cover
 from project.models import User,bcrypt # pragma: no cover
 from project import db # pragma: no cover
+from project.token import generate_confirmation_token, confirm_token #pragma: no cover
+from project.email import send_email
+import datetime #pragma: no cover
 
 
 ##########################
@@ -59,9 +62,29 @@ def logout():
     flash('You were logged out.')
     return redirect(url_for('home.welcome'))
 
+
+
+@users_blueprint.route('/confirm/<token>')
+@login_required
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash("The confirmation link is invalid or has expired.", "danger")
+    user = User.query.filter_by(email=confirm_token(token)).first_or_404()
+    if user.confirmed:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        user.confirmed = True
+        user.confirmed_on = datetime.datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('home.home'))
+
 @users_blueprint.route('/register', methods=["GET", "POST"])
 def register():
-    form = RegisterForm()
+    form = RegisterForm(request.form)
     if form.validate_on_submit():
         user = User(
             username = form.username.data,
@@ -71,6 +94,23 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-        login_user(user)
-        return redirect(url_for('home.home'))
+
+        token = generate_confirmation_token(user.email)
+        confirm_url = url_for("users.confirm_email", token=token, _external=True)
+        html = render_template('activate.html', confirm_url=confirm_url)
+        subject = "Please confirm your email"
+        send_email(user.email, subject, html)
+        login_user(user) #may want to  removed - want to force user to authenticate before logging in
+
+
+        return redirect(url_for("users.unconfirmed"))
     return render_template('register.html', form=form)
+
+
+@users_blueprint.route('/unconfirmed')
+@login_required
+def unconfirmed():
+    if current_user.confirmed:
+        return redirect('main.home')
+    flash('Please confirm your account!', 'warning')
+    return render_template('unconfirmed.html')
