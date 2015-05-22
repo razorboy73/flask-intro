@@ -71,6 +71,7 @@ def confirm_email(token):
         email = confirm_token(token)
     except:
         flash("The confirmation link is invalid or has expired.", "danger")
+        return render_template('login.html')
     user = User.query.filter_by(email=email).first_or_404()
     if user.confirmed:
         flash('Account already confirmed. Please login.', 'success')

@@ -1,6 +1,6 @@
 __author__ = 'workhorse'
 import unittest
-
+import datetime
 from flask.ext.login import current_user, request
 from base import BaseTestCase
 from project import bcrypt
@@ -31,6 +31,15 @@ class TestUser(BaseTestCase):
                 follow_redirects = True)
             self.assertTrue(current_user.id == 1)
             self.assertFalse(current_user.id ==20)
+
+    def test_registered_on_defaults_to_datetime(self):
+        # Ensure that registered_on is a datetime
+        with self.client:
+            self.client.post('/login', data=dict(
+                email='ad@min.com', password='admin'
+            ), follow_redirects=True)
+            user = User.query.filter_by(email='ad@min.com').first()
+            self.assertIsInstance(user.registered_on, datetime.datetime)
 
     def test_check_password(self):
         #ensure passowrd is correct after unhassing
@@ -104,13 +113,21 @@ class TestLoginForm(BaseTestCase):
 
     def test_validate_success_login_form(self):
         # Ensure correct data validates.
-        form = LoginForm(email='ad@min.com', password='admin')
+        form = LoginForm(username="admin", password='admin')
         self.assertTrue(form.validate())
 
     def test_validate_invalid_email_format(self):
         # Ensure invalid email format throws error.
         form = LoginForm(email='unknown', password='example')
         self.assertFalse(form.validate())
+
+    def test_validate_invalid_password(self):
+        # Ensure user can't login when the pasword is incorrect
+        with self.client:
+            response = self.client.post('/login', data=dict(
+                username="admin", password='foo_bar'
+            ), follow_redirects=True)
+        self.assertIn(b'Invalid Credentials. Please try again.', response.data)
 
 if __name__ == "__main__":
     unittest.main()
