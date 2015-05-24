@@ -42,7 +42,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     WTF_CSRF_ENABLED = False
     DEBUG_TB_ENABLED = True
-    UPLOAD_FOLDER = "/Users/workhorse/flask-intro/project/static/uploads"
+    UPLOAD_FOLDER = os.path.realpath('.') +'/project/static/uploads'
 
 
 class ProductionConfig(BaseConfig):

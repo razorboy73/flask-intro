@@ -42,7 +42,7 @@ nosetests.xml
 # Virtual environment
 venv
 coverage
-
+.env
 
 *.idea
-uploads/*
+*/uploads/
