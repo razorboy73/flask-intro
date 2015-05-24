@@ -65,7 +65,6 @@ def logout():
 
 
 @users_blueprint.route('/confirm/<token>')
-@login_required
 def confirm_email(token):
     try:
         email = confirm_token(token)
