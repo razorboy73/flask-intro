@@ -16,6 +16,7 @@ class BaseConfig(object):
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+    UPLOAD_FOLDER = os.path.realpath('.') +'/project/static/uploads'
 
 
 
@@ -42,7 +43,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     WTF_CSRF_ENABLED = False
     DEBUG_TB_ENABLED = True
-    UPLOAD_FOLDER = os.path.realpath('.') +'/project/static/uploads'
+
 
 
 class ProductionConfig(BaseConfig):
