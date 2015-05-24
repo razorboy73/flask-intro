@@ -44,6 +44,12 @@ login_manager.login_message_category = "danger"
 def load_user(user_id):
     return User.query.filter(User.id==int(user_id)).first()
 
+
+########################
+#### File Uploading ####
+########################
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 ########################
 #### error handlers ####
 ########################

@@ -1,7 +1,7 @@
 __author__ = 'workhorse'
 
 from flask_wtf import Form
-from wtforms import StringField
+from wtforms import StringField, FileField
 from wtforms.validators import DataRequired, Length
 
 class MessageForm(Form):
@@ -9,3 +9,4 @@ class MessageForm(Form):
     description = StringField(
         "Description", validators=[DataRequired(), Length(max=140)]
     )
+    image = FileField("Product Image")

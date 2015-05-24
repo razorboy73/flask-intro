@@ -15,6 +15,8 @@ class BaseConfig(object):
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
+    ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 
 
     # gmail authentication
@@ -40,6 +42,8 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     WTF_CSRF_ENABLED = False
     DEBUG_TB_ENABLED = True
+    UPLOAD_FOLDER = "/Users/workhorse/flask-intro/project/static/uploads"
+
 
 class ProductionConfig(BaseConfig):
     DEBUG = False

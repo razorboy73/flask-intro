@@ -8,7 +8,7 @@
 
     <h3>Add A Post!</h3>
     <br>
-    <form class="form-message" role ="form" method="post" action="/">
+    <form class="form-message" role ="form" method="post" action="/" enctype="multipart/form-data">
     {{ form.csrf_token }}
     <p>{{ form.title(placeholder="Title") }}
         <span class="error">
@@ -28,8 +28,10 @@
          {% endif %}
         </span>
        </p>
+        <p>{{ form.image(placeholder="Upload") }}</p>
 
-     <button class="btn btn-sm btn-success" type="submit">Sign in</button>
+
+     <button class="btn btn-sm btn-success" type="submit">Post</button>
 
 </form>
 
@@ -39,6 +41,10 @@
     <strong>Title:</strong> {{ post.title }}<br>
     <strong>Post:</strong> {{ post.description }}
     <strong>Author:</strong> {{ post.author.name }}
+    <strong>Picture:</strong> {% if post.image_path %}
+    <img src="{{ url_for('static', filename='uploads/' + post.image_path) }}"/>
+    {% endif %}
+
     <br>
     {% endfor %}
 
