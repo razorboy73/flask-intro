@@ -18,6 +18,13 @@ class BaseConfig(object):
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
     UPLOAD_FOLDER = os.path.realpath('.') +'/project/static/uploads'
 
+    #############
+    ### AWS #####
+    #############
+    AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY']
+    AWS_SECRET_KEY = os.environ['AWS_SECRET_KEY']
+    AWS_BUCKET = os.environ['AWS_BUCKET']
+
 
 
     # gmail authentication

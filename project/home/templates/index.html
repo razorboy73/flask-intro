@@ -42,7 +42,7 @@
     <strong>Post:</strong> {{ post.description }}
     <strong>Author:</strong> {{ post.author.name }}
     <strong>Picture:</strong> {% if post.image_path %}
-    <img src="{{ url_for('static', filename='uploads/' + post.image_path) }}"/>
+    <img src="{{ 'https://s3.amazonaws.com/' + config['AWS_BUCKET'] + '/' + post.image_path }}"/>
     {% endif %}
 
     <br>

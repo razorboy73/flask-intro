@@ -10,7 +10,7 @@ from project.models import BlogPost # pragma: no cover
 from project.decorators import check_confirmed
 import os
 from werkzeug import secure_filename
-
+from boto.s3.connection import S3Connection
 
 
 ##########################
@@ -52,8 +52,18 @@ def home():
         image = request.files['image']
         filename = ''
         if image and allowed_file(image.filename):
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+            filename = image.filename
+            conn = S3Connection(
+            aws_access_key_id=app.config['AWS_ACCESS_KEY'],
+            aws_secret_access_key = app.config['AWS_SECRET_KEY']
+            )
+            bucket = conn.create_bucket(app.config['AWS_BUCKET'])
+            key = bucket.new_key(filename)
+            key.set_contents_from_file(image)
+            key.make_public()
+            key.set_metadata(
+            'Content-Type', 'image/' + filename.split('.')[-1].lower()
+            )
         new_message = BlogPost(form.title.data, form.description.data,
             filename,current_user.id)
         db.session.add(new_message)
