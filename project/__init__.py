@@ -28,9 +28,11 @@ login_manager.init_app(app)
 from project.users.views import users_blueprint
 from project.home.views import home_blueprint
 
+
 #register blue print
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
+
 
 ########################
 # login view definition#
@@ -56,14 +58,14 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 @app.errorhandler(403)
 def forbidden_page(error):
-    return render_template("errors/403.html"), 403
+    return render_template("403.html"), 403
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template("errors/404.html"), 404
+    return render_template("404.html"), 404
 
 
 @app.errorhandler(500)
 def server_error_page(error):
-    return render_template("errors/500.html"), 500
+    return render_template("500.html"), 500
