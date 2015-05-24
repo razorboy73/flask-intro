@@ -40,6 +40,8 @@ def allowed_file(filename):
 
 # use decorators to link the function to a url
 @home_blueprint.route('/', methods = ["GET", "POST"])
+@home_blueprint.route('/index', methods = ["GET", "POST"])
+@login_required
 @check_confirmed
 def home():
     # return "Hello, World!"  # return a string
