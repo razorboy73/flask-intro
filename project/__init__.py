@@ -5,7 +5,8 @@ __author__ = 'workhorse'
 ################################################
 
 import os
-
+import sys
+import logging
 from flask import Flask,render_template
 from flask.ext.mail import Mail
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -24,6 +25,8 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 from project.users.views import users_blueprint
 from project.home.views import home_blueprint

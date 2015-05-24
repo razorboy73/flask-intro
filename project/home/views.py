@@ -39,7 +39,7 @@ def allowed_file(filename):
     return '.' in filename and filename.lower().rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 # use decorators to link the function to a url
-@home_blueprint.route('', methods = ["GET", "POST"])
+
 @home_blueprint.route('/', methods = ["GET", "POST"])
 @home_blueprint.route('/index', methods = ["GET", "POST"])
 @login_required
