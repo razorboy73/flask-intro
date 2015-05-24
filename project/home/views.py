@@ -63,6 +63,7 @@ def home():
         #posts = db.session.query(BlogPost).all()
     return render_template('index.html', form=form, posts=posts)  # render a templates
 
+@login_required
 @home_blueprint.route('/welcome')
 def welcome():
     return render_template('welcome.html')  # render a templates
