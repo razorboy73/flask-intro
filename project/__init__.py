@@ -56,16 +56,3 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 #### error handlers ####
 ########################
 
-@app.errorhandler(403)
-def forbidden_page(error):
-   return 'This page is forbidden', 403
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    return 'This page does not exist', 404
-
-
-@app.errorhandler(500)
-def server_error_page(error):
-    return 'Database connection failed', 500
