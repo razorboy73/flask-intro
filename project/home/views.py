@@ -2,10 +2,10 @@
 # import the Flask class from the flask module #
 ################################################
 from functools import wraps # pragma: no cover
-from flask import Blueprint, render_template,request, flash,redirect, url_for # pragma: no cover
+from flask import Blueprint, render_template,request, flash,redirect, url_for, current_app # pragma: no cover
 from flask.ext.login import login_required, current_user # pragma: no cover
 from forms import MessageForm # pragma: no cover
-from project import db,app # pragma: no cover
+from project import db # pragma: no cover
 from project.models import BlogPost # pragma: no cover
 from project.decorators import check_confirmed
 import os
@@ -54,10 +54,10 @@ def home():
         if image and allowed_file(image.filename):
             filename = image.filename
             conn = S3Connection(
-            aws_access_key_id=app.config['AWS_ACCESS_KEY'],
-            aws_secret_access_key = app.config['AWS_SECRET_KEY']
+            aws_access_key_id=current_app.config['AWS_ACCESS_KEY'],
+            aws_secret_access_key = current_app.config['AWS_SECRET_KEY']
             )
-            bucket = conn.create_bucket(app.config['AWS_BUCKET'])
+            bucket = conn.create_bucket(current_app.config['AWS_BUCKET'])
             key = bucket.new_key(filename)
             key.set_contents_from_file(image)
             key.make_public()

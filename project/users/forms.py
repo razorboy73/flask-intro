@@ -1,6 +1,6 @@
 __author__ = 'workhorse'
 from flask_wtf import Form
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class LoginForm(Form):
@@ -25,3 +25,14 @@ class RegisterForm(Form):
         "Repeat password",
         validators=[DataRequired(), EqualTo('password', message = "Passwords must match")]
     )
+
+class AdminUserCreateForm(Form):
+    username =  StringField('Username', [DataRequired()])
+    password = PasswordField('Password', [DataRequired()])
+    email = StringField("Email   ",validators=[DataRequired(), Email(message = None),Length(min=3, max=40)]
+    )
+    admin = BooleanField('Is Admin ?')
+
+class AdminUserUpdateForm(Form):
+    username =  StringField('Username', [DataRequired()])
+    admin = BooleanField('Is Admin ?')

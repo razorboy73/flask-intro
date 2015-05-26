@@ -38,8 +38,8 @@ class User(db.Model):
     confirmed_on = db.Column(db.DateTime, nullable=True)
     posts = relationship("BlogPost", backref="author",  lazy="dynamic")
 
-    def __init__(self, username, email, password, confirmed,
-                 paid=False,admin=False, confirmed_on=None):
+    def __init__(self, username, email, password,admin,confirmed=False,
+                 paid=False, confirmed_on=None):
         self.name = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
@@ -59,6 +59,9 @@ class User(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
+    def is_admin(self):
+        return self.admin
 
 
 
