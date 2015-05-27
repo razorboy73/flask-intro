@@ -51,6 +51,41 @@ class Instructor(db.Model):
 
 
 
+
+
+class Student(db.Model):
+    __tablename__='students'
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    parent_first_name
+    parnet_last_name
+    parent_email
+    parent_phone_number
+    medical_issues
+    referral_source
+    email = db.Column(db.String, nullable=False)
+    phone = db.Column(db.Integer, nullable=True)
+    hired_on = db.Column(db.DateTime, nullable=True)
+    active = db.Column(db.Boolean, nullable=False, default=False)
+    fully_paid = db.Column(db.Boolean, nullable=False, default=False)
+    amount_paid = db.Column(db.Integer, nullable=True)
+    course_id = db.Column(db.Integer, ForeignKey('courses.id'))
+
+    def __init__(self, first_name, last_name, email, phone, hired_on, active, course_id):
+
+        self.first_name= first_name
+        self.last_name = last_name
+        self.email = email
+        self.phone = phone
+        self.hired_on = hired_on
+        self.active = active
+        self.course_id = course_id
+
+        def __repr__(self):
+            return "<firstName: {} lastName:{}>".format(self.title)
+
+
 class Course(db.Model):
     __tablename__='courses'
     id = db.Column(db.Integer, primary_key=True)
