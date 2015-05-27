@@ -1,10 +1,9 @@
 # project/decorators.py
-
-
 from functools import wraps
-
 from flask import flash, redirect, url_for
 from flask.ext.login import current_user
+
+from threading import Thread
 
 
 def check_confirmed(func):
@@ -16,3 +15,10 @@ def check_confirmed(func):
         return func(*args, **kwargs)
 
     return decorated_function
+
+
+def asynch(f):
+    def wrapper(*args, **kwargs):
+        thr = Thread(target=f, args=args, kwargs=kwargs)
+        thr.start()
+    return wrapper

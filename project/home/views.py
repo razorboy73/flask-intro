@@ -11,6 +11,7 @@ from project.decorators import check_confirmed
 import os
 from werkzeug import secure_filename
 from boto.s3.connection import S3Connection
+from project.email import send_email
 
 
 ##########################
@@ -68,7 +69,12 @@ def home():
             filename,current_user.id)
         db.session.add(new_message)
         db.session.commit()
+        html = render_template('posted-stuff.html')
+        subject = "You posted stuff"
+        send_email(current_user.email, subject, html)
         flash("New entry was successfully posted.  Thanks.")
+
+
         return redirect(url_for('home.home'))
     else:
         posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
