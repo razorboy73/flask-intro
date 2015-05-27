@@ -7,7 +7,7 @@ from flask import flash, redirect, render_template, request,\
 from flask.ext.login import login_user,login_required, logout_user, current_user # pragma: no cover
 from functools import wraps #- not needed with flask login
 from forms import LoginForm, RegisterForm, PasswordField, AdminUserCreateForm, AdminUserUpdateForm # pragma: no cover
-from project.models import User, BlogPost, bcrypt  # pragma: no cover
+from project.models import User, BlogPost, Course, Instructor, bcrypt  # pragma: no cover
 from project import db # pragma: no cover
 from project.token import generate_confirmation_token, confirm_token #pragma: no cover
 from project.email import send_email
@@ -188,6 +188,31 @@ class PostView(ModelView):
     def __init__(self, session, **kwargs):
         # You can pass name and other parameters if you want to
         super(PostView, self).__init__(BlogPost, session, **kwargs)
+
+
+class CourseView(ModelView):
+    # Disable model creation
+    can_create = False
+
+    # Override displayed fields
+    #column_list = ('title', 'description')
+
+    def __init__(self, session, **kwargs):
+        # You can pass name and other parameters if you want to
+        super(CourseView, self).__init__(Course, session, **kwargs)
+
+
+class InstructorView(ModelView):
+    # Disable model creation
+    can_create = False
+
+    # Override displayed fields
+    #column_list = ('title', 'description')
+
+    def __init__(self, session, **kwargs):
+        # You can pass name and other parameters if you want to
+        super(InstructorView, self).__init__(Instructor, session, **kwargs)
+
 """
 class MyAdminIndexView(AdminIndexView):
 

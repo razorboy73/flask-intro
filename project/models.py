@@ -25,6 +25,71 @@ class BlogPost(db.Model):
     def __repr__(self):
         return "<title {}>".format(self.title)
 
+class Instructor(db.Model):
+    __tablename__='instructors'
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    phone = db.Column(db.Integer, nullable=True)
+    hired_on = db.Column(db.DateTime, nullable=True)
+    active = db.Column(db.Boolean, nullable=False, default=False)
+    course_id = db.Column(db.Integer, ForeignKey('courses.id'))
+
+    def __init__(self, first_name, last_name, email, phone, hired_on, active, course_id):
+
+        self.first_name= first_name
+        self.last_name = last_name
+        self.email = email
+        self.phone = phone
+        self.hired_on = hired_on
+        self.active = active
+        self.course_id = course_id
+
+        def __repr__(self):
+            return "<firstName: {} lastName:{}>".format(self.title)
+
+
+
+class Course(db.Model):
+    __tablename__='courses'
+    id = db.Column(db.Integer, primary_key=True)
+    course_title =db.Column(db.String(128), nullable=False)
+    course_description = db.Column(db.String, nullable=False)
+    course_location = db.Column(db.String, nullable=False)
+    course_start_date = db.Column(db.DateTime, nullable=False)
+    course_end_date = db.Column(db.DateTime, nullable=True )
+    course_duration = db.Column(db.Float, nullable=True )
+    class_start_time = db.Column(db.Time, nullable=True)
+    class_end_time = db.Column(db.Time, nullable=True)
+    class_duration = db.Column(db.Time, nullable=True)
+    course_price = db.Column(db.Float, nullable=False )
+    course_num_students = db.Column(db.Integer, nullable=False )
+    course_instructor = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    instructor = relationship("Instructor", backref="instructor",  lazy="dynamic")
+
+
+
+    def __init__(self, course_title, course_description, course_location, course_start_date,
+                 course_end_date,course_duration, class_start_time, class_end_time, course_price,
+                 course_num_students, course_instructor, user_id ):
+
+        self.course_title = course_title
+        self.course_description =course_description
+        self.course_location = course_location
+        self.course_start_date = course_start_date
+        self.course_end_date = course_end_date
+        self.course_duration = course_duration
+        self.class_start_time = class_start_time
+        self.class_end_time = class_end_time
+        self.course_price = course_price
+        self.course_num_students = course_num_students
+        self.course_instructor = course_instructor
+        self.user_id = user_id
+
+    def __repr__(self):
+        return "<course title {}>".format(self.course_title)
 
 class User(db.Model):
     __tablename__ ="users"
@@ -37,6 +102,7 @@ class User(db.Model):
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
     posts = relationship("BlogPost", backref="author",  lazy="dynamic")
+    course = relationship("Course", backref="course",  lazy="dynamic")
 
     def __init__(self, username, email, password,admin=False,confirmed=False,
                  paid=False, confirmed_on=None):
@@ -62,7 +128,6 @@ class User(db.Model):
 
     def is_admin(self):
         return self.admin
-
 
 
 

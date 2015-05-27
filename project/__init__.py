@@ -57,6 +57,8 @@ def create_app(config_name):
     import project.users.views as views
     admin.add_view(views.MyView(db.session))
     admin.add_view(views.PostView(db.session))
+    admin.add_view(views.CourseView(db.session))
+    admin.add_view(views.InstructorView(db.session))
     #admin.add_view(views.MyView(name='Hello 1', endpoint='test1', category='Test'))
     #admin.add_view(views.MyView(name='Hello 2', endpoint='test2', category='Test'))
     #admin.add_view(views.MyView(name='Hello 3', endpoint='test3', category='Test'))
