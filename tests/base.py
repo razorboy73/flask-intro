@@ -1,14 +1,15 @@
 __author__ = 'workhorse'
 from flask.ext.testing import TestCase
-from project import app,db
+from project import db
+from flask import current_app
 from project.models import BlogPost, User
 
 
 class BaseTestCase(TestCase):
 
     def create_app(self):
-        app.config.from_object('config.TestConfig')
-        return app
+        current_app.config.from_object('config.TestConfig')
+        return current_app
 
     def setUp(self):
         db.create_all()

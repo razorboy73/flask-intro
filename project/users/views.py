@@ -5,15 +5,15 @@
 from flask import flash, redirect, render_template, request,\
      url_for, Blueprint, abort # pragma: no cover
 from flask.ext.login import login_user,login_required, logout_user, current_user # pragma: no cover
-#from functools import wraps - not needed with flask login
+from functools import wraps #- not needed with flask login
 from forms import LoginForm, RegisterForm, PasswordField, AdminUserCreateForm, AdminUserUpdateForm # pragma: no cover
 from project.models import User, BlogPost, bcrypt  # pragma: no cover
 from project import db # pragma: no cover
 from project.token import generate_confirmation_token, confirm_token #pragma: no cover
 from project.email import send_email
 import datetime #pragma: no cover
-#from flask.ext.admin import BaseView, expose, AdminIndexView
-#from flask.ext.admin.contrib.sqla import ModelView
+from flask.ext.admin import BaseView, expose, Admin
+from flask.ext.admin.contrib.sqla import ModelView
 from functools import wraps
 
 
@@ -100,8 +100,7 @@ def register():
         user = User(
             username = form.username.data,
             email = form.email.data,
-            password=form.password.data,
-            confirmed = False
+            password=form.password.data
         )
         db.session.add(user)
         db.session.commit()
@@ -144,92 +143,60 @@ def resend_confirmation():
 ## Admin #########
 ##################
 
-@users_blueprint.route('/admin')
-@login_required
-@admin_login_required
-def home_admin():
-    return render_template('admin-home.html')
-
-@users_blueprint.route('/admin/users-list')
-@login_required
-@admin_login_required
-def users_list_admin():
-    users = User.query.all()
-    return render_template('users-list-admin.html', users=users, current_user=current_user)
-
-
-
-@users_blueprint.route('/admin/create-user', methods=['GET', 'POST'])
-@login_required
-@admin_login_required
-def user_create_admin():
-    form = AdminUserCreateForm(request.form)
-    if form.validate():
-        username = form.username.data
-        email = form.email.data,
-        password = form.password.data
-        admin = str(form.admin.data)
-
-        existing_username = User.query.filter_by (name=username).first()
-        if existing_username:
-            flash('This username has been already taken. Try another one.','warning')
-            return render_template('register.html', form=form)
-        user = User(username,email, password, admin)
-        db.session.add(user)
-        db.session.commit()
-        flash('New User Created.', 'info')
-        token = generate_confirmation_token(user.email)
-        confirm_url = url_for("users.confirm_email", token=token, _external=True)
-        html = render_template('activate.html', confirm_url=confirm_url)
-        subject = "Please confirm your email"
-        send_email(user.email, subject, html)
-        return redirect(url_for('users.users_list_admin'))
-    if form.errors:
-        flash(form.errors, 'danger')
-    return render_template('user-create-admin.html', form=form)
-
-@users_blueprint.route('/admin/update-user/<int:id>', methods=['GET', 'POST'])
-@login_required
-@admin_login_required
-def user_update_admin(id):
-    user = User.query.get(id)
-    form = AdminUserUpdateForm(request.form, username=user.name, admin=user.admin)
-    if form.validate_on_submit():
-        username = form.username.data
-        admin = form.admin.data
-        User.query.filter_by(id=id).update({'name': username,'admin': admin,})
-        db.session.commit()
-        flash('User Updated.', 'info')
-        return redirect(url_for('users.users_list_admin'))
-    if form.errors:
-        flash(form.errors, 'danger')
-    return render_template('user-update-admin.html', form=form, user=user)
-
-@users_blueprint.route('/admin/delete-user/<int:id>', methods=["GET","POST"])
-@login_required
-@admin_login_required
-def user_delete_admin(id):
-    user = User.query.get((id))
-    if request.method =="POST":
-        db.session.delete(user)
-        db.session.commit()
-        flash("Whoops")
-        return redirect(url_for('users.users_list_admin'))
-    users = User.query.all()
-    return render_template('users-list-admin.html', users=users, current_user=current_user)
-"""
-class HelloView(BaseView):
-    @expose('/')
+class MyView(BaseView):
+    @expose("/")
     def index(self):
-        return self.render('some-template.html')
+        return self.render("index-admin.html")
 
     def is_accessible(self):
         return current_user.is_authenticated() and current_user.is_admin()
 
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('login', next=request.url))
 
+class MyView(ModelView):
+    # Disable model creation
+
+
+    # Override displayed fields
+    column_list = ('name', 'email','admin','registered_on')
+
+    def create_model(self, form):
+        model = self.model(
+        form.name.data, form.email.data, form.password.data,
+        form.admin.data
+        )
+        form.populate_obj(model)
+        self.session.add(model)
+        self.on_model_change(form, model, True)
+        self.session.commit()
+        return redirect(url_for('home.home'))
+
+    def __init__(self, session, **kwargs):
+        # You can pass name and other parameters if you want to
+        super(MyView, self).__init__(User, session, **kwargs)
+
+
+class PostView(ModelView):
+    # Disable model creation
+    can_create = False
+
+    # Override displayed fields
+    column_list = ('title', 'description')
+
+    def __init__(self, session, **kwargs):
+        # You can pass name and other parameters if you want to
+        super(PostView, self).__init__(BlogPost, session, **kwargs)
+"""
 class MyAdminIndexView(AdminIndexView):
+
     def is_accessible(self):
-        return current_user.is_authenticated() and current_user.is_admin()
+        return current_user.is_admin()
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('login', next=request.url))
 
 class UserAdminView(ModelView):
     column_searchable_list = ('name',)
@@ -248,10 +215,23 @@ class UserAdminView(ModelView):
 
     def create_model(self, form):
         model = self.model(
-        form.username.data, form.password.data,
+        form.name.data, form.email.data, form.password.data,
         form.admin.data
         )
         form.populate_obj(model)
         self.session.add(model)
         self._on_model_change(form, model, True)
-        self.session.commit()"""
+        self.session.commit()
+
+class BlogAdminView(ModelView):
+    column_searchable_list = ('title','user_id')
+    column_sortable_list = ('title', 'description', 'user_id')
+    form_edit_rules = ('title', 'description')
+
+    def is_accessible(self):
+        return current_user.is_authenticated() and current_user.is_admin()
+
+    def scaffold_form(self):
+        form_class = super(BlogAdminView, self).scaffold_form()
+        return form_class
+"""

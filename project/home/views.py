@@ -36,7 +36,7 @@ home_blueprint = Blueprint('home', __name__,
 #    return wrap
 
 def allowed_file(filename):
-    return '.' in filename and filename.lower().rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.lower().rsplit('.', 1)[1] in current_app.config['ALLOWED_EXTENSIONS']
 
 # use decorators to link the function to a url
 

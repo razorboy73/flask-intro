@@ -12,8 +12,9 @@ from flask.ext.mail import Mail
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.login import LoginManager
-#from flask.ext.admin import Admin
-#from flask.ext.admin.contrib.sqla import ModelView
+from flask.ext.admin import Admin
+
+
 
 
 
@@ -25,7 +26,7 @@ db = SQLAlchemy()
 mail = Mail()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-#admin = Admin()
+admin = Admin(name = "jerry")
 
 
 
@@ -33,7 +34,7 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_name)
     db.init_app(app)
-    #admin.init_app(app)
+    admin.init_app(app)
     bcrypt.init_app(app)
     mail.init_app(app)
     login_manager.init_app(app)
@@ -49,13 +50,19 @@ def create_app(config_name):
     app.register_blueprint(users_blueprint)
     app.register_blueprint(home_blueprint)
 
+
+
     # Other admin configuration as shown in last recipe
 
     import project.users.views as views
-    #admin.add_view(views.HelloView(name='Hello'))
-    #admin.add_view(ModelView(views.User, db.session))
-    #admin.add_view(ModelView(views.BlogPost, db.session))
+    admin.add_view(views.MyView(db.session))
+    admin.add_view(views.PostView(db.session))
+    #admin.add_view(views.MyView(name='Hello 1', endpoint='test1', category='Test'))
+    #admin.add_view(views.MyView(name='Hello 2', endpoint='test2', category='Test'))
+    #admin.add_view(views.MyView(name='Hello 3', endpoint='test3', category='Test'))
+    #admin.add_view(views.ModelView(User, db.session))
     #admin.add_view(views.UserAdminView(views.User, db.session))
+    #admin.add_view(views.BlogAdminView(views.BlogPost, db.session))
 
     return app
 
