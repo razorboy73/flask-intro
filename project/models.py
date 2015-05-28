@@ -74,7 +74,6 @@ class Student(db.Model):
     fully_paid = db.Column(db.Boolean, nullable=False, default=False)
     amount_paid = db.Column(db.Integer, nullable=True)
     #course_id = db.Column(db.Integer, ForeignKey('courses.id'))
-    courses = relationship("Course", secondary =student_course_link, backref=db.backref("students",lazy="dynamic"))
 
     def __init__(self, first_name, last_name, email, phone, hired_on, active, course_id):
 
@@ -89,10 +88,6 @@ class Student(db.Model):
         def __repr__(self):
             return "<firstName: {} lastName:{}>".format(self.title)
 
-student_course_link = db.Table('student_course_link',
-     db.Column('course_id',db.Integer, ForeignKey('courses.id')),
-     db.Column('user_id',db.Integer, ForeignKey('courses.id'))
-     )
 
 
 class Course(db.Model):
@@ -112,7 +107,6 @@ class Course(db.Model):
     course_instructor = db.Column(db.String, nullable=True)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
     instructor = relationship("Instructor", backref="instructors",  lazy="dynamic")
-    students = relationship("Student", secondary ="student_course_link",  backref=db.backref("students",lazy="dynamic") backref="students")
 
 
     def __init__(self, course_title,  user_id, course_description=None, course_location=None, course_start_date=None,
