@@ -1,7 +1,7 @@
 __author__ = 'workhorse'
 
-from sqlalchemy import ForeignKey # pragma: no cover
-from sqlalchemy.orm import relationship # pragma: no cover
+from sqlalchemy import ForeignKey, func # pragma: no cover
+from sqlalchemy.orm import relationship, backref # pragma: no cover
 from project import db # pragma: no cover
 from project import bcrypt # pragma: no cover
 import datetime
@@ -50,27 +50,31 @@ class Instructor(db.Model):
             return "<firstName: {} lastName:{}>".format(self.title)
 
 
-
-
-
 class Student(db.Model):
     __tablename__='students'
+
     id = db.Column(db.Integer, primary_key=True)
+    date_enrolled = db.Column(db.DateTime, nullable=False, default=func.now())
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    parent_first_name
-    parnet_last_name
-    parent_email
-    parent_phone_number
-    medical_issues
-    referral_source
-    email = db.Column(db.String, nullable=False)
+    parent_first_name = db.Column(db.String, nullable=False)
+    parent_last_name = db.Column(db.String, nullable=False)
+    parent_email = db.Column(db.String, nullable=True)
     phone = db.Column(db.Integer, nullable=True)
-    hired_on = db.Column(db.DateTime, nullable=True)
+    second_parent_first_name = db.Column(db.String, nullable=True)
+    second_parent_last_name = db.Column(db.String, nullable=True)
+    second_parent_email = db.Column(db.String, nullable=True)
+    second_parent_phone = db.Column(db.Integer, nullable=True)
+    medical_issues = db.Column(db.String, nullable=True)
+    custody_issues = db.Column(db.String, nullable=True)
+    release_people = db.Column(db.String, nullable=True)
+    referral_source = db.Column(db.String, nullable=True)
+    student_email = db.Column(db.String, nullable=True)
     active = db.Column(db.Boolean, nullable=False, default=False)
     fully_paid = db.Column(db.Boolean, nullable=False, default=False)
     amount_paid = db.Column(db.Integer, nullable=True)
-    course_id = db.Column(db.Integer, ForeignKey('courses.id'))
+    #course_id = db.Column(db.Integer, ForeignKey('courses.id'))
+    courses = relationship("Course", secondary =student_course_link, backref=db.backref("students",lazy="dynamic"))
 
     def __init__(self, first_name, last_name, email, phone, hired_on, active, course_id):
 
@@ -85,30 +89,35 @@ class Student(db.Model):
         def __repr__(self):
             return "<firstName: {} lastName:{}>".format(self.title)
 
+student_course_link = db.Table('student_course_link',
+     db.Column('course_id',db.Integer, ForeignKey('courses.id')),
+     db.Column('user_id',db.Integer, ForeignKey('courses.id'))
+     )
+
 
 class Course(db.Model):
     __tablename__='courses'
     id = db.Column(db.Integer, primary_key=True)
     course_title =db.Column(db.String(128), nullable=False)
-    course_description = db.Column(db.String, nullable=False)
-    course_location = db.Column(db.String, nullable=False)
-    course_start_date = db.Column(db.DateTime, nullable=False)
+    course_description = db.Column(db.String, nullable=True)
+    course_location = db.Column(db.String, nullable=True)
+    course_start_date = db.Column(db.DateTime, nullable=True)
     course_end_date = db.Column(db.DateTime, nullable=True )
     course_duration = db.Column(db.Float, nullable=True )
     class_start_time = db.Column(db.Time, nullable=True)
     class_end_time = db.Column(db.Time, nullable=True)
     class_duration = db.Column(db.Time, nullable=True)
-    course_price = db.Column(db.Float, nullable=False )
-    course_num_students = db.Column(db.Integer, nullable=False )
-    course_instructor = db.Column(db.String, nullable=False)
+    course_price = db.Column(db.Float, nullable=True )
+    course_num_students = db.Column(db.Integer, nullable=True )
+    course_instructor = db.Column(db.String, nullable=True)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
-    instructor = relationship("Instructor", backref="instructor",  lazy="dynamic")
+    instructor = relationship("Instructor", backref="instructors",  lazy="dynamic")
+    students = relationship("Student", secondary ="student_course_link",  backref=db.backref("students",lazy="dynamic") backref="students")
 
 
-
-    def __init__(self, course_title, course_description, course_location, course_start_date,
-                 course_end_date,course_duration, class_start_time, class_end_time, course_price,
-                 course_num_students, course_instructor, user_id ):
+    def __init__(self, course_title,  user_id, course_description=None, course_location=None, course_start_date=None,
+                 course_end_date=None,course_duration=None, class_start_time=None, class_end_time=None, course_price=None,
+                 course_num_students=None, course_instructor=None ):
 
         self.course_title = course_title
         self.course_description =course_description
