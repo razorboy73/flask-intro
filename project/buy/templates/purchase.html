@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Pick a course</h1>
+<br>
+
+
+{% for course in courses %}
+<p> Course Name: {{ course.course_name }} Course Price: {{ course.price }} Max Number of Students: {{ course.max_number_students}}   Remaining Space: {{ course.spaces_left }}
+{% if course.spaces_left > 0 %}
+<form action="{{ url_for('buy.buy')}}" method="POST">
+ <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  data-key={{key}}
+  data-amount= {{format_price(course.price)}}
+  data-name="Super teacher"
+  data-label="Great  Dancing"
+  data-description="Learn to Dance">
+ </script>
+ {% else %}
+ <p>No more space</p>
+ {% endif %}
+<input type="hidden" name="course_id" value="{{course.id}}" />
+</form>
+
+{% endfor %}
+
+
+{% endblock %}

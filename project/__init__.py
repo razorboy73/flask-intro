@@ -44,19 +44,24 @@ def create_app(config_name):
 
     from project.users.views import users_blueprint
     from project.home.views import home_blueprint
+    from project.buy.views import buy_blueprint
 
 
     #register blue print
     app.register_blueprint(users_blueprint)
     app.register_blueprint(home_blueprint)
+    app.register_blueprint(buy_blueprint)
 
 
 
     # Other admin configuration as shown in last recipe
 
     import project.users.views as views
+    import project.buy.views as buyviews
     admin.add_view(views.MyView(db.session))
     admin.add_view(views.PostView(db.session))
+    admin.add_view(buyviews.CourseView(db.session))
+    admin.add_view(buyviews.PurchaseView(db.session))
     #admin.add_view(views.MyView(name='Hello 1', endpoint='test1', category='Test'))
     #admin.add_view(views.MyView(name='Hello 2', endpoint='test2', category='Test'))
     #admin.add_view(views.MyView(name='Hello 3', endpoint='test3', category='Test'))

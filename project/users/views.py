@@ -7,7 +7,7 @@ from flask import flash, redirect, render_template, request,\
 from flask.ext.login import login_user,login_required, logout_user, current_user # pragma: no cover
 from functools import wraps #- not needed with flask login
 from forms import LoginForm, RegisterForm, PasswordField, AdminUserCreateForm, AdminUserUpdateForm # pragma: no cover
-from project.models import User, BlogPost, bcrypt  # pragma: no cover
+from project.models import User, BlogPost, Purchase, Course, bcrypt  # pragma: no cover
 from project import db # pragma: no cover
 from project.token import generate_confirmation_token, confirm_token #pragma: no cover
 from project.email import send_email
@@ -188,50 +188,6 @@ class PostView(ModelView):
     def __init__(self, session, **kwargs):
         # You can pass name and other parameters if you want to
         super(PostView, self).__init__(BlogPost, session, **kwargs)
-"""
-class MyAdminIndexView(AdminIndexView):
 
-    def is_accessible(self):
-        return current_user.is_admin()
 
-    def _handle_view(self, name, **kwargs):
-        if not self.is_accessible():
-            return redirect(url_for('login', next=request.url))
 
-class UserAdminView(ModelView):
-    column_searchable_list = ('name',)
-    column_sortable_list = ('name', 'admin', 'email','registered_on')
-    column_exclude_list = ('password',)
-    form_excluded_columns = ('password',)
-    form_edit_rules = ('name', 'admin','email')
-
-    def is_accessible(self):
-        return current_user.is_authenticated() and current_user.is_admin()
-
-    def scaffold_form(self):
-        form_class = super(UserAdminView, self).scaffold_form()
-        form_class.password = PasswordField('Password')
-        return form_class
-
-    def create_model(self, form):
-        model = self.model(
-        form.name.data, form.email.data, form.password.data,
-        form.admin.data
-        )
-        form.populate_obj(model)
-        self.session.add(model)
-        self._on_model_change(form, model, True)
-        self.session.commit()
-
-class BlogAdminView(ModelView):
-    column_searchable_list = ('title','user_id')
-    column_sortable_list = ('title', 'description', 'user_id')
-    form_edit_rules = ('title', 'description')
-
-    def is_accessible(self):
-        return current_user.is_authenticated() and current_user.is_admin()
-
-    def scaffold_form(self):
-        form_class = super(BlogAdminView, self).scaffold_form()
-        return form_class
-"""

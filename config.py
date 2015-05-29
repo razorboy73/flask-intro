@@ -18,6 +18,7 @@ class BaseConfig(object):
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
     UPLOAD_FOLDER = os.path.realpath('.') +'/project/static/uploads'
 
+
     #############
     ### AWS #####
     #############
