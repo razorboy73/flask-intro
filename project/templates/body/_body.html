@@ -1,0 +1,189 @@
+<div class="body-wrap">
+    <!-- This section is only for demonstration purpose only. Check out the docs for more informations" -->
+    <div id="divStyleSwitcher" class="style-switcher-slidebar">
+    <a href="#" id="cmdShowStyleSwitcher" class="open-panel hidden-xs"><i class="fa fa-cog"></i></a>
+    <div class="switch-panel">
+        <h3>Boomerang - Style Builder</h3>
+        <div class="panel-section">
+            <h4 class="title text-uppercase font-normal">Layout options</h4>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>I prefer it:</label>
+                        <select id="cmbLayoutStyle" class="form-control">
+                            <option value="1">Fluid</option>
+                            <option value="2">Boxed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label></label>
+                        <select id="cmbLayoutColor" class="form-control">
+                            <option value="1">Light</option>
+                            <option value="2">Dark</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <label class="mt-10">Predefined body backgrounds</label>
+            <span class="clearfix"></span>
+            <span id="cmbBodyBg" class="color-switch">
+                <a href="#" id="cmdBodyBg1" class="body-bg-1 ttip" data-toggle="bottom" title="Solid color"></a>
+                <a href="#" id="cmdBodyBg2" class="body-bg-2 ttip" data-toggle="bottom" title="Black Lozenge"></a>
+                <a href="#" id="cmdBodyBg3" class="body-bg-3 ttip" data-toggle="bottom" title="Squairy Light"></a>
+                <a href="#" id="cmdBodyBg4" class="body-bg-4 ttip" data-toggle="bottom" title="Dark Dotted"></a>
+                <a href="#" id="cmdBodyBg5" class="body-bg-5 ttip" data-toggle="bottom" title="Skulls"></a>
+                <a href="#" id="cmdBodyBg6" class="body-bg-6 ttip" data-toggle="bottom" title="Image Background - 1"></a>
+                <a href="#" id="cmdBodyBg7" class="body-bg-7 ttip" data-toggle="bottom" title="Image Background - 2"></a>
+                <span class="clearfix"></span>
+            </span>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Section title:</label>
+                        <select id="cmbSectionTitleStyle" class="form-control">
+                            <option value="1">Style 1</option>
+                            <option value="2">Style 2</option>
+                            <option value="3">Style 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Color:</label>
+                        <select id="cmbSectionTitleColor" class="form-control" disabled="disabled">
+                            <option value="1">Base</option>
+                            <option value="2">Alt Base</option>
+                            <option value="3">Light</option>
+                            <option value="4">Dark</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="panel-section">
+            <h4 class="title text-uppercase font-normal">Header options</h4>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Header:</label>
+                        <select id="cmbHeaderStyle" class="form-control">
+                            <option value="2">Header 1: Default navbar</option>
+                            <option value="3">Header 2: Default navbar + Top header</option>
+                            <option value="1">Header 3: Header + Navbar</option>
+                            <option value="4">Header 4: Cover</option>
+<!--
+                            <option value="5">Header 1: Default + Mobile nav 2</option>
+                            <option value="6">Header 2: Default + Top header + Mobile nav 2</option>
+                            <option value="7">Header 3: Header + Navbar + Mobile nav 2</option>
+                            <option value="8">Header 4: Cover</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Top header color:</label>
+                        <select id="cmbTopHeaderColor" class="form-control" disabled="disabled">
+                            <option value="1">Light</option>
+                            <option value="2">Dark</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Nav shadow</label>
+                        <select id="cmbNavShadow" class="form-control">
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Dropdown arrow:</label>
+                        <select id="cmbNavDropdownArrow" class="form-control">
+                            <option value="2">Yes</option>
+                            <option value="1">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="panel-section">
+            <h4 class="title text-uppercase font-normal">Color options</h4>
+
+            <label>Predefined colors</label>
+            <span class="clearfix"></span>
+            <span class="color-switch">
+                <a href="#" id="cmdSchemeRed" class="color-red" title="Red">Red</a>
+                <a href="#" id="cmdSchemeViolet" class="color-violet" title="Violet">Violet</a>
+                <a href="#" id="cmdSchemeBlue" class="color-blue" title="Blue">Blue</a>
+                <a href="#" id="cmdSchemeGreen" class="color-green" title="Green">Green</a>
+                <a href="#" id="cmdSchemeYellow" class="color-yellow" title="Yellow">Yellow</a>
+                <a href="#" id="cmdSchemeOrange" class="color-orange" title="Orange">Orange</a>
+            </span>
+        </div>
+
+        <hr>
+
+        <div class="panel-section">
+            <h4 class="title">
+                <span class="text-uppercase font-normal">Special</span>
+                <a href="#" class="pop" title="About customization" data-content="We created some examples that show you the multitude of options you have so you make this template as you wish. <br><br>Customization is very easy and it is made in only one file.">
+                    <i class="fa fa-question-circle"></i>
+                </a>
+                <label class="badge base pull-right">New</label>
+            </h4>
+
+            <label>Predefined schemes</label>
+            <span class="clearfix"></span>
+            <span class="color-switch">
+                <a href="#" id="cmdSchemeBW" class="color-bw ttip" data-toggle="top" title="Black & White">Black and white</a>
+                <a href="#" id="cmdSchemeDark" class="color-dark ttip" data-toggle="top" title="Dark">Dark</a>
+                <a href="#" id="cmdSchemeFlat" class="color-flat ttip" data-toggle="top" title="Flat">Flat</a>
+            </span>
+
+        </div>
+
+        <div class="panel-section mt-15 hide">
+            <a href="#"><span>Reset all applied styles</span></a>
+            <br><br>
+        </div>
+
+    </div>
+</div>
+            <!-- HEADER -->
+        <div id="divHeaderWrapper">
+            <header class="header-standard-2">
+    <!-- MAIN NAV -->
+    {% include "/navbar/_navbar.html" %}
+</header>        </div>
+
+        <!-- Optional header components (ex: slider) -->
+        	<!-- Importing slider content -->
+    {% include "/slider/_slider.html" %}
+
+    <!-- MAIN CONTENT -->
+     {% include "/maincontent/_maincontent.html" %}
+
+    <!-- CLIENTS -->
+   <!--  {% include "/clients/_clients.html" %} -->
+    <!-- FOOTER -->
+    {% include "/footer/_footer.html" %}
+</div>

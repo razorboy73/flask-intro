@@ -6,11 +6,14 @@ from flask import Blueprint, render_template,request, flash,redirect, url_for, c
 from flask.ext.login import login_required, current_user # pragma: no cover
 from forms import MessageForm # pragma: no cover
 from project import db # pragma: no cover
-from project.models import BlogPost # pragma: no cover
+from project.models import BlogPost,Course # pragma: no cover
 from project.decorators import check_confirmed
 import os
 from werkzeug import secure_filename
 from boto.s3.connection import S3Connection
+import stripe
+import uuid
+import sys
 
 
 ##########################
@@ -20,6 +23,16 @@ from boto.s3.connection import S3Connection
 home_blueprint = Blueprint('home', __name__,
                             template_folder='templates') # pragma: no cover
 
+
+
+
+
+stripe_keys = {
+    'secret_key': 'sk_test_66JgwFeJaEa0NNrxgBjv9Scr',
+    'publishable_key': 'pk_test_dzYx1fZrr100wb02ctTHbYUz'
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 ###########################
 # login required decorator#
@@ -40,10 +53,14 @@ def allowed_file(filename):
 
 # use decorators to link the function to a url
 
+@home_blueprint.context_processor
+def utility_processor():
+    def format_price(amount):
+        return u'{0:.0f}'.format(100*int(amount))
+    return dict(format_price=format_price)
+
 @home_blueprint.route('/', methods = ["GET", "POST"])
 @home_blueprint.route('/index', methods = ["GET", "POST"])
-@login_required
-@check_confirmed
 def home():
     # return "Hello, World!"  # return a string
     error = None
@@ -71,9 +88,10 @@ def home():
         flash("New entry was successfully posted.  Thanks.")
         return redirect(url_for('home.home'))
     else:
-        posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
+        #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
         #posts = db.session.query(BlogPost).all()
-    return render_template('index.html', form=form, posts=posts)  # render a templates
+        courses = Course.query.all()
+        return render_template('base.html', courses =courses, key=stripe_keys['publishable_key'])  # render a templates , form=form, posts=posts
 
 @home_blueprint.route('/welcome')
 def welcome():

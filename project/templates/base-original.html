@@ -1,0 +1,43 @@
+{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html>
+  <head>
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    {% block title %}<title>Flask Intro</title> {% endblock title %}
+    {% endblock head %}
+    </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+  {% block body -%}
+
+  {% block navbar %}
+      <div class="navbar navbar-inverse " role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{ url_for('home.home') }}">Flask Cookbook</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endblock navbar %}
+    <div class="container">
+      <!--child templates -->
+        {% block content %}  {% endblock %}
+      <!--errors-->
+      {% if error %}
+        <p><strong>Error: </strong>{{ error }}</p>
+     {% endif %}
+     <!--messages -->
+        {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+
+    </div>
+  </body>
+  {%- endblock body %}
+</html>

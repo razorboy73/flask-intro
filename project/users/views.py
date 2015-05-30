@@ -15,6 +15,10 @@ import datetime #pragma: no cover
 from flask.ext.admin import BaseView, expose, Admin
 from flask.ext.admin.contrib.sqla import ModelView
 from functools import wraps
+import stripe
+import uuid
+import sys
+
 
 
 ##########################
@@ -23,6 +27,9 @@ from functools import wraps
 
 users_blueprint = Blueprint('users', __name__,
                             template_folder='templates') # pragma: no cover
+
+
+
 
 ################################
 # login required decorator######

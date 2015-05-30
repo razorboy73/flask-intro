@@ -1,0 +1,174 @@
+        {% block content %}
+        <section class="slice bb">
+        <div class="wp-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 wp-block no-space arrow-right base no-margin">
+                        <div class="wp-block-body">
+                            <div class="img-icon">
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <h1>Learn to grow</h1>
+                            <p class="text-center">
+                            Lorem ipsum dolor sit amet, consectetur curabitur pellentesque neque eget diam posuere adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 wp-block no-space arrow-right light no-margin">
+                        <div class="wp-block-body">
+                            <div class="img-icon">
+                                <i class="fa fa-bicycle"></i>
+                            </div>
+                            <h1>Experience to know</h1>
+                            <p class="text-center">
+                            Lorem ipsum dolor sit amet, consectetur urabitur pellentesque neque eget diam posuere adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 wp-block no-space dark no-margin">
+                        <div class="wp-block-body">
+                            <div class="img-icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h1>Share to everyone</h1>
+                            <p class="text-center">
+                            Lorem ipsum dolor sit amet, consectetur urabitur pellentesque neque eget diam posuere adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slice light-gray bb">
+        <div class="wp-section">
+            <div class="container">
+                <div class="section-title-wr">
+                    <h3 class="section-title left">
+                        <span>What do we offer</span>
+                        <small>Lorem ipsum dolor sit amet</small>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="icon-block icon-block-2">
+                            <div class="icon-block-item base">
+                                <i class="fa fa-list-alt "></i>
+                            </div>
+                            <div class="icon-block-body">
+                                <h4 class="">Endless possibilities</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 ">
+                        <div class="icon-block icon-block-2">
+                            <div class="icon-block-item base">
+                                <i class="fa fa-desktop"></i>
+                            </div>
+                            <div class="icon-block-body">
+                                <h4 class="">Over 60 page layouts</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="icon-block icon-block-2">
+                            <div class="icon-block-item base">
+                                <i class="fa fa-camera-retro"></i>
+                            </div>
+                            <div class="icon-block-body">
+                                <h4 class="">Great design. Flexible code</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 ">
+                        <div class="icon-block icon-block-2">
+                            <div class="icon-block-item base">
+                                <i class="fa fa-coffee"></i>
+                            </div>
+                            <div class="icon-block-body">
+                                <h4 class="">Super friendly customer support</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slice animate-hover-slide bg-white bb">
+        <div class="wp-section">
+            <div class="container">
+                <div class="section-title-wr">
+                    <h3 class="section-title left">
+                        <span>Latest courses</span>
+                        <small>Learn to code by building video games</small>
+                    </h3>
+                </div>
+                <div class="owl-carousel owl-carousel-3">
+                {% for course in courses %}
+                <div class="wp-block-body bb">
+
+
+                        <div class="item">
+
+                            <div class="wp-block default">
+
+                                <div class="figure">
+                                    <img alt="" src="../static/images/prv/school/school-1.jpg" class="img-responsive">
+                                    <span class="wp-block-date-over alpha"><strong>{{ course.start_date }}</strong></span>
+                                    <div class="figcaption bg-base"></div>
+                                    <div class="figcaption-btn">
+                                        <a href="../static/images/prv/col-img-1.jpg" class="btn btn-xs btn-b-white theater"><i class="fa fa-plus-circle"></i> Zoom</a>
+                                        <a href="#" class="btn btn-xs btn-b-white"><i class="fa fa-link"></i> View</a>
+                                    </div>
+                                </div>
+
+                                    <h2 class="title">{{ course.course_name }}</h2>
+                                    <p>{{ course.course_description }}</p>
+                                    <p>{{ course.max_number_students}}</p>
+                                    <p>Remaining Space: {{ course.spaces_left }}</p>
+                                    <p>Course Price:  {{ course.price }}</p>
+                                    {% if course.spaces_left > 0 %}
+                                        <form action="{{ url_for('buy.buy')}}" method="POST">
+                                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key={{key}}
+                                        data-amount= {{format_price(course.price)}}
+                                        data-name="Super teacher"
+                                        data-label="Great  Dancing"
+                                        data-description="Learn to Dance">
+                                        </script>
+                                        <input type="hidden" name="course_id" value="{{course.id}}" />
+                                    </form>
+                                    {% else %}
+                                    <p>No more space</p>
+                                    {% endif %}
+
+                                </div>
+                                <ul class="aux-info-cells">
+
+
+                                    <li><i class="fa fa-calendar"></i> {{ course.start_date }}</li>
+                                    <li><i class="fa fa-calendar"></i> {{ course.end_date }}</li>
+                                    <li><i class="fa fa-clock-o"></i> {{ course.start_time }}</li>
+                                    <li><i class="fa fa-clock-o"></i> {{ course.end_time }}</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% include "/whatshappening/_whatshappening.html" %}
+
+    {% endblock %}

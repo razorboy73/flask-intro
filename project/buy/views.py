@@ -100,7 +100,7 @@ def courses():
     courses = Course.query.all()
 
 
-    return render_template("purchase.html", courses=courses, key=stripe_keys['publishable_key'])
+    return render_template("home-index.html", courses=courses, key=stripe_keys['publishable_key'])
 
 @buy_blueprint.context_processor
 def utility_processor():
