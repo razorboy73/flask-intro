@@ -26,7 +26,7 @@ db = SQLAlchemy()
 mail = Mail()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-admin = Admin(name = "jerry")
+admin = Admin(name = "Super Nerd Factory")
 
 
 

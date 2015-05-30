@@ -156,6 +156,15 @@ class MyView(BaseView):
             return redirect(url_for('login', next=request.url))
 
 class MyView(ModelView):
+
+    def is_accessible(self):
+        return current_user.is_authenticated() and current_user.is_admin()
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('users.login', next=request.url))
+
+
     # Disable model creation
 
 
@@ -180,6 +189,15 @@ class MyView(ModelView):
 
 class PostView(ModelView):
     # Disable model creation
+
+    def is_accessible(self):
+        return current_user.is_authenticated() and current_user.is_admin()
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('users.login', next=request.url))
+
+
     can_create = False
 
     # Override displayed fields

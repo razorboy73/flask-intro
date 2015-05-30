@@ -42,6 +42,14 @@ stripe.api_key = stripe_keys['secret_key']
 class CourseView(ModelView):
     # Disable model creation
 
+    def is_accessible(self):
+        return current_user.is_authenticated() and current_user.is_admin()
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('users.login', next=request.url))
+
+
 
     # Override displayed fields
     column_list = ("course_name", "course_description", "course_location", "start_date","end_date",
@@ -57,6 +65,14 @@ class CourseView(ModelView):
 
 class PurchaseView(ModelView):
     # Disable model creation
+
+    def is_accessible(self):
+        return current_user.is_authenticated() and current_user.is_admin()
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('users.login', next=request.url))
+
 
 
     # Override displayed fields
