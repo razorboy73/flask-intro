@@ -91,7 +91,7 @@ def home():
         #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
         #posts = db.session.query(BlogPost).all()
         courses = Course.query.all()
-        return render_template('base.html', courses =courses, key=stripe_keys['publishable_key'])  # render a templates , form=form, posts=posts
+        return render_template('index.html' )  # render a templates , form=form, posts=posts
 
 @home_blueprint.route('/welcome')
 def welcome():

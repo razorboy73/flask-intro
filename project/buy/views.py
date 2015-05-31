@@ -98,15 +98,18 @@ class PurchaseView(ModelView):
 @buy_blueprint.route('/courses', methods=["GET", "POST"])
 def courses():
     courses = Course.query.all()
-
-
-    return render_template("home-index.html", courses=courses, key=stripe_keys['publishable_key'])
+    return render_template("purchase.html", courses=courses, key=stripe_keys['publishable_key'])
 
 @buy_blueprint.context_processor
 def utility_processor():
     def format_price(amount):
         return u'{0:.0f}'.format(100*int(amount))
     return dict(format_price=format_price)
+
+
+@buy_blueprint.route('/register', methods=["GET", "POST"])
+def register():
+    pass
 
 
 

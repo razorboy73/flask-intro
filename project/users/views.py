@@ -53,6 +53,10 @@ def admin_login_required(func):
 #    return wrap
 
 
+@users_blueprint.route('/aboutus')
+def about_us():
+    return render_template('about_us.html')
+
 # route for handling the login page logic
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():

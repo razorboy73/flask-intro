@@ -1,64 +1,28 @@
-<div class="navbar navbar-wp navbar-arrow mega-nav" role="navigation">
-        <div class="container">
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle navbar-toggle-aside-menu">
-                    <i class="fa fa-outdent icon-custom"></i>
-                </button>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <i class="fa fa-bars icon-custom"></i>
-                </button>
-
-                <a class="navbar-brand" href="index.html" title="Boomerang | One template. Infinite solutions">
-                    <img src="../static/images/boomerang-logo-black.png" alt="Boomerang | One template. Infinite solutions">
-                </a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Project name</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden-md hidden-lg">
-                        <div class="bg-light-gray">
-                            <form class="form-horizontal form-light p-15" role="form">
-                                <div class="input-group input-group-lg">
-                                    <input type="text" class="form-control" placeholder="I want to find ...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-white" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{{ url_for('buy.courses') }}">Courses</a></li>
-                    <li><a href="/register">Register</a></li>
-                    <li><a href="/locations">Location</a></li>
-                    <li><a href="/resources">Resources</a></li>
-                    <li><a href="/aboutus">About Us</a></li>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('home.home') }}">Home</a></li>
+                <li><a href="{{ url_for('buy.courses') }}">Courses</a></li>
+                <li><a href="{{ url_for('buy.register') }}">Register</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
-                    <li class="dropdown dropdown-aux animate-click" data-animate-in="animated bounceInUp" data-animate-out="animated fadeOutDown" style="z-index:500;">
-                        <a href="#" class="dropdown-form-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-user animate-wr">
-                            <li id="dropdownForm">
-                                <div class="dropdown-form">
-                                    <form class="form-horizontal form-light p-15" role="form">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="I want to find ...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-base" type="button">Go</button>
-                                            </span>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-aux">
-                        <a href="#" id="cmdAsideMenu" class="dropdown-toggle dropdown-form-toggle" title="Open slidebar">
-                            <i class="fa fa-outdent"></i>
-                        </a>
-                    </li>
-                </ul>
-
-            </div><!--/.nav-collapse -->
-        </div>
+      </div>
     </div>

@@ -1,24 +1,54 @@
+{% extends "base.html" %}
 
-<h1>Pick a course</h1>
-<br>
-
-
+{% block content %}
 {% for course in courses %}
-<p> Course Name: {{ course.course_name }} Course Price: {{ course.price }} Max Number of Students: {{ course.max_number_students}}   Remaining Space: {{ course.spaces_left }}
-{% if course.spaces_left > 0 %}
-<form action="{{ url_for('buy.buy')}}" method="POST">
- <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-  data-key={{key}}
-  data-amount= {{format_price(course.price)}}
-  data-name="Super teacher"
-  data-label="Great  Dancing"
-  data-description="Learn to Dance">
- </script>
- {% else %}
- <p>No more space</p>
- {% endif %}
-<input type="hidden" name="course_id" value="{{course.id}}" />
-</form>
+<div class="container marketing">
+<hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Course Name: {{ course.course_name }}</h2>
+          <p class="lead">Course Price: {{ course.price }}</p>
+          <p>Max Number of Students: {{ course.max_number_students}}</p>
+          <p>Remaining Space: {{ course.spaces_left }}</p>
+          <p>course_description: {{ course.course_description }}</p>
+          <p>course_location: {{ course.course_location }}</p>
+          <p>start_date: {{ course.start_date }}</p>
+          <p>end_date: {{ course.end_date }}</p>
+          <p>start_time: {{ course.start_time }}</p>
+          <p>end_time: {{ course.end_time }}</p>
+          <p>max_number_students: {{ course.max_number_students }}</p>
+          <p>spaces_left:  {{ course.spaces_left }}</p>
+
+
+
+
+          </p>
+          {% if course.spaces_left > 0 %}
+            <form action="{{ url_for('buy.buy')}}" method="POST">
+             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key={{key}}
+              data-amount= {{format_price(course.price)}}
+              data-name="Super teacher"
+              data-label="Great  Dancing"
+              data-description="Learn to Dance">
+             </script>
+             {% else %}
+             <p>No more space</p>
+             {% endif %}
+            <input type="hidden" name="course_id" value="{{course.id}}" />
+            </form>
+          </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto"
+          src ="../static/images/kids-computer.jpg"
+          alt="Generic placeholder image">
+        </div>
+      </div>
+
+</div>
 
 {% endfor %}
+
+{% endblock %}
 
