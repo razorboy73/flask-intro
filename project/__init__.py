@@ -13,7 +13,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.login import LoginManager
 from flask.ext.admin import Admin
-from flask.ext.bootstrap import Bootstrap
+
 
 
 
