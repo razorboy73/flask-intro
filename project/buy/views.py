@@ -53,7 +53,7 @@ class CourseView(ModelView):
 
 
     # Override displayed fields
-    column_list = ("course_name", "course_description", "course_location", "start_date","end_date",
+    column_list = ("course_name", "age_range","course_description", "course_location", "start_date","end_date",
                  "start_time","end_time","max_number_students","spaces_left","is_active", "price")
 
 

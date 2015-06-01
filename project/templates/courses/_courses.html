@@ -1,0 +1,77 @@
+<section class="slice animate-hover-slide bg-white bb">
+        <div class="wp-section">
+            <div class="container">
+                <div class="section-title-wr">
+                    <h3 class="section-title left">
+                        <span>Latest courses</span>
+                        <small>Learn to code by doing</small>
+                    </h3>
+                </div>
+
+                <div class="owl-carousel owl-carousel-3">
+                    {% for course in courses %}
+                    <div class="item">
+                        <div class="wp-block default">
+                            <div class="figure">
+                                <img alt="" src="../static/images/prv/school/school-1.jpg" class="img-responsive">
+                                <span class="wp-block-date-over alpha"><strong>{{ course.start_date }}</strong></span>
+                                <div class="figcaption bg-base"></div>
+                                <div class="figcaption-btn">
+                                    <a href="../static/images/prv/col-img-1.jpg" class="btn btn-xs btn-b-white theater"><i class="fa fa-plus-circle"></i> Zoom</a>
+                                    <a href="#" class="btn btn-xs btn-b-white"><i class="fa fa-link"></i> View</a>
+                                </div>
+                            </div>
+                            <div class="wp-block-body bb">
+                                <h2 class="title">{{ course.course_name }}</h2>
+                                <h2 class="featurette-heading">Course Name: {{ course.course_name }}</h2>
+
+                                    <p>Max Number of Students: {{ course.max_number_students}}</p>
+                                      <p>Spaces Left:  {{ course.spaces_left }}</p>
+                                      <p>Target Age Group: {{ course.age_range }} years old. </p>
+                                      <p>Remaining Space: {{ course.spaces_left }}</p>
+                                      <p>Course Description: {{ course.course_description }}</p>
+                                      <p>Course Location: {{ course.course_location }}</p>
+                                      <p>Start Date: {{ course.start_date.strftime('%b %d, %Y') }}</p>
+                                      <p>End Date: {{ course.end_date.strftime('%b %d, %Y') }}</p>
+                                      <p>Start Time: {{ course.start_time.strftime('%I:%M %p') }}</p>
+                                      <p>End Time: {{ course.end_time.strftime('%I:%M %p') }}</p>
+                                      <p >Course Price: {{format_price_dollars(course.price)}}</p>
+
+                                      {% if course.spaces_left > 0 %}
+                                        <form action="{{ url_for('buy.buy')}}" method="POST">
+                                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                          data-key={{key}}
+                                          data-amount= {{format_price(course.price)}}
+                                          data-name="Location: {{ course.course_location }}"
+                                          data-label= "Register for: {{course.course_name}}"
+                                          data-description="Start Date: {{course.start_date.strftime('%b %d, %Y')}}">
+                                         </script>
+                                         {% else %}
+                                         <button class="btn btn-primary"> No More Space</button>
+                                         {% endif %}
+                                        <input type="hidden" name="course_id" value="{{course.id}}" />
+                                        </form>
+                                    </div>
+
+                            <ul class="aux-info-cells">
+                                <li><i class="fa fa-calendar"></i> Sep 10</li>
+                                <li><i class="fa fa-clock-o"></i> 10:00 AM</li>
+                                <li><i class="fa fa-user"></i> <a href="#">A. Smith</a></li>
+                            </ul>
+                            </div>
+
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+
+
+
+    </div>
+ </section>

@@ -8,17 +8,19 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading">Course Name: {{ course.course_name }}</h2>
-          <p class="lead">Course Price: {{format_price_dollars(course.price)}}</p>
+
           <p>Max Number of Students: {{ course.max_number_students}}</p>
+          <p>Spaces Left:  {{ course.spaces_left }}</p>
+          <p>Target Age Group: {{ course.age_range }} years old. </p>
           <p>Remaining Space: {{ course.spaces_left }}</p>
-          <p>course description: {{ course.course_description }}</p>
-          <p>course location: {{ course.course_location }}</p>
-          <p>start date: {{ course.start_date.strftime('%b %d, %Y') }}</p>
-          <p>end date: {{ course.end_date.strftime('%b %d, %Y') }}</p>
-          <p>start time: {{ course.start_time.strftime('%I:%M %p') }}</p>
-          <p>end time: {{ course.end_time.strftime('%I:%M %p') }}</p>
-          <p>max number students: {{ course.max_number_students }}</p>
-          <p>spaces left:  {{ course.spaces_left }}</p>
+          <p>Course Description: {{ course.course_description }}</p>
+          <p>Course Location: {{ course.course_location }}</p>
+          <p>Start Date: {{ course.start_date.strftime('%b %d, %Y') }}</p>
+          <p>End Date: {{ course.end_date.strftime('%b %d, %Y') }}</p>
+          <p>Start Time: {{ course.start_time.strftime('%I:%M %p') }}</p>
+          <p>End Time: {{ course.end_time.strftime('%I:%M %p') }}</p>
+          <p >Course Price: {{format_price_dollars(course.price)}}</p>
+
           {% if course.spaces_left > 0 %}
             <form action="{{ url_for('buy.buy')}}" method="POST">
              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -29,7 +31,7 @@
               data-description="Start Date: {{course.start_date.strftime('%b %d, %Y')}}">
              </script>
              {% else %}
-             <p>No more space</p>
+             <button class="btn btn-primary"> No More Space</button>
              {% endif %}
             <input type="hidden" name="course_id" value="{{course.id}}" />
             </form>
@@ -46,4 +48,5 @@
 {% endfor %}
 
 {% endblock %}
+
 

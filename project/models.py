@@ -20,11 +20,12 @@ class Course(db.Model):
     spaces_left = db.Column(db.Integer, default=5)
     is_active = db.Column(db.Boolean, default=True)
     price = db.Column(db.Float, nullable=True)
+    age_range = db.Column(db.String, nullable=True)
 
 
 
     def __init__(self, course_name=None, course_description=None, course_location=None,start_date=None,end_date=None,
-                start_time=None,end_time=None,max_number_students=None,spaces_left=None,is_active=None, price=None):
+                start_time=None,end_time=None,max_number_students=None,spaces_left=None,is_active=None, price=None, age_range=None):
         self.course_name = course_name
         self.course_description=course_description
         self.course_location = course_location
@@ -36,6 +37,7 @@ class Course(db.Model):
         self.spaces_left = spaces_left
         self.is_active = is_active
         self.price = price
+        self.age_range = age_range
 
 
     def __repr__(self):

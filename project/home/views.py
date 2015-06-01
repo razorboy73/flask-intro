@@ -59,39 +59,27 @@ def utility_processor():
         return u'{0:.0f}'.format(100*int(amount))
     return dict(format_price=format_price)
 
+@home_blueprint.context_processor
+def utility_processor():
+    def format_price(amount):
+        return u'{0:.0f}'.format(100*int(amount))
+    return dict(format_price=format_price)
+
+@home_blueprint.context_processor
+def utility_processor():
+    def format_price_dollars(amount):
+        return u'${0:.2f}'.format(int(amount))
+    return dict(format_price_dollars=format_price_dollars)
+
 @home_blueprint.route('/', methods = ["GET", "POST"])
 @home_blueprint.route('/index', methods = ["GET", "POST"])
 def home():
     # return "Hello, World!"  # return a string
-    error = None
-    form = MessageForm(request.form)
-    if form.validate_on_submit():
-        image = request.files['image']
-        filename = ''
-        if image and allowed_file(image.filename):
-            filename = image.filename
-            conn = S3Connection(
-            aws_access_key_id=current_app.config['AWS_ACCESS_KEY'],
-            aws_secret_access_key = current_app.config['AWS_SECRET_KEY']
-            )
-            bucket = conn.create_bucket(current_app.config['AWS_BUCKET'])
-            key = bucket.new_key(filename)
-            key.set_contents_from_file(image)
-            key.make_public()
-            key.set_metadata(
-            'Content-Type', 'image/' + filename.split('.')[-1].lower()
-            )
-        new_message = BlogPost(form.title.data, form.description.data,
-            filename,current_user.id)
-        db.session.add(new_message)
-        db.session.commit()
-        flash("New entry was successfully posted.  Thanks.")
-        return redirect(url_for('home.home'))
-    else:
-        #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
-        #posts = db.session.query(BlogPost).all()
-        courses = Course.query.all()
-        return render_template('index.html' )  # render a templates , form=form, posts=posts
+    #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
+    #posts = db.session.query(BlogPost).all()
+
+    courses = Course.query.all()
+    return render_template('base.html', courses=courses )  # render a templates , form=form, posts=posts
 
 @home_blueprint.route('/welcome')
 def welcome():
