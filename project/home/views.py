@@ -77,7 +77,7 @@ def home():
     # return "Hello, World!"  # return a string
     #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
     #posts = db.session.query(BlogPost).all()
-
+    stripe.api_key = "sk_test_66JgwFeJaEa0NNrxgBjv9Scr"
     courses = Course.query.all()
     return render_template('base.html', courses=courses )  # render a templates , form=form, posts=posts
 
