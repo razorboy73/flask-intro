@@ -188,10 +188,10 @@ def buy():
     <p>End Time: {}</p>""".format(course.course_name, course.course_name,
         course.price, course.course_description,
         course.course_location,
-        course.start_date,
-        course.start_date,
-        course.start_time,
-        course.end_time
+        course.start_date.strftime('%b %d, %Y'),
+        course.start_date.strftime('%b %d, %Y'),
+        course.start_time.strftime('%I:%M %p'),
+        course.end_time.strftime('%I:%M %p')
     )
     send_email(email, subject, html)
     return redirect(url_for('home.home'))
