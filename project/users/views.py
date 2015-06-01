@@ -104,7 +104,7 @@ def confirm_email(token):
         flash('You have confirmed your account. Thanks!', 'success')
     return redirect(url_for('home.home'))
 
-@users_blueprint.route('/register', methods=["GET", "POST"])
+@users_blueprint.route('/user-register', methods=["GET", "POST"])
 def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():

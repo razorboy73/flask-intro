@@ -12,6 +12,7 @@ import datetime #pragma: no cover
 from flask.ext.admin import BaseView, expose, Admin
 from flask.ext.admin.contrib.sqla import ModelView
 from functools import wraps
+from .forms import EnrollmentForm
 import stripe
 import uuid
 import sys
@@ -81,7 +82,9 @@ class PurchaseView(ModelView):
     def create_model(self, form):
         model = self.model(
         form.email.data,
-        form.product.data, form.payment_method.data, form.notes.data,
+        form.product.data,
+        form.payment_method.data,
+        form.notes.data,
         form.date_purchased.data
         )
         form.populate_obj(model)
@@ -106,10 +109,63 @@ def utility_processor():
         return u'{0:.0f}'.format(100*int(amount))
     return dict(format_price=format_price)
 
+@buy_blueprint.route('/register2', methods=["GET", "POST"])
+def register2():
+    stripe.api_key = "sk_test_66JgwFeJaEa0NNrxgBjv9Scr"
+    token = request.form['stripeToken']
+    error = None
+    form = EnrollmentForm(request.form)
+    courses = Course.query.all()
+    course_id = request.form['product']
+    course = Course.query.get(course_id)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            purchase = Purchase(uuid=str(uuid.uuid4()),
+            email=form.email.data,
+            product=form.product.data,
+            payment_method = form.payment_method.data,
+            notes = form.notes.data)
+            charge = stripe.Charge.create(
+                amount=int(int(course.price) * 100),
+                currency='cad',
+                card=token,
+                description=form.email.data)
+            db.session.add(purchase)
+            db.session.commit()
+
+        return redirect(url_for('home.home'))
+    return render_template('register.html', courses=courses,form=form, error=error)
+
+
+
+
+
 
 @buy_blueprint.route('/register', methods=["GET", "POST"])
 def register():
-    pass
+    stripe.api_key = "sk_test_66JgwFeJaEa0NNrxgBjv9Scr"
+
+    error = None
+    form = EnrollmentForm(request.form)
+    courses = Course.query.all()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            purchase = Purchase(uuid=str(uuid.uuid4()),
+            email=form.email.data,
+            product=form.product.data,
+            payment_method = form.payment_method.data,
+            notes = form.notes.data)
+            charge = stripe.Charge.create(
+                amount=int(int(course.price) * 100),
+                currency='cad',
+                card=token,
+                description=form.email.data)
+        db.session.add(purchase)
+        db.session.commit()
+
+        return redirect(url_for('home.home'))
+    return render_template('register.html', courses=courses,form=form, error=error)
+
 
 
 
