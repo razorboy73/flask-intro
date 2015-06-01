@@ -108,7 +108,12 @@ def utility_processor():
     def format_price(amount):
         return u'{0:.0f}'.format(100*int(amount))
     return dict(format_price=format_price)
+@buy_blueprint.context_processor
 
+def utility_processor():
+    def format_price_dollars(amount):
+        return u'${0:.2f}'.format(int(amount))
+    return dict(format_price_dollars=format_price_dollars)
 
 """
 @buy_blueprint.route('/register3', methods=["GET", "POST"])
@@ -179,14 +184,15 @@ def buy():
     html=""""<html><body><h1>Thanks for registering for {}</h1>
     <p>A member of our team will follow up with you to get the complete details for your child.<p>
     <p>Course Name: {}</h2>
-    <p>Course Price: ${}</p>
+    <p>Course Price: {}</p>
     <p>Course Description: {}</p>
     <p>Course Location: {}</p>
     <p>Start Date: {}</p>
     <p>End Date: {}</p>
     <p>Start Time: {}</p>
     <p>End Time: {}</p>""".format(course.course_name, course.course_name,
-        course.price, course.course_description,
+        "${:,.2f}".format(course.price),
+        course.course_description,
         course.course_location,
         course.start_date.strftime('%b %d, %Y'),
         course.start_date.strftime('%b %d, %Y'),

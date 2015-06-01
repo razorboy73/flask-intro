@@ -8,7 +8,7 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading">Course Name: {{ course.course_name }}</h2>
-          <p class="lead">Course Price: {{ course.price }}</p>
+          <p class="lead">Course Price: {{format_price_dollars(course.price)}}</p>
           <p>Max Number of Students: {{ course.max_number_students}}</p>
           <p>Remaining Space: {{ course.spaces_left }}</p>
           <p>course description: {{ course.course_description }}</p>
@@ -26,7 +26,7 @@
               data-amount= {{format_price(course.price)}}
               data-name="Location: {{ course.course_location }}"
               data-label= "Register for: {{course.course_name}}"
-              data-description="Start Date: {{course.start_date}}">
+              data-description="Start Date: {{course.start_date.strftime('%b %d, %Y')}}">
              </script>
              {% else %}
              <p>No more space</p>
