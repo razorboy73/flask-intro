@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>Stripe Getting Started Form</title>
- 
+{%  extends "base.html" %}
+  <title>{% block title %}Register your kids{% endblock %}</title>
+
+ {% block scriptstop %}
+ {{ super() }}
   <!-- The required Stripe lib -->
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
- 
   <!-- jQuery is used only for this example; it isn't required to use Stripe -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
  
@@ -45,11 +43,15 @@
       });
     });
   </script>
+  {% endblock %}
 </head>
 <body>
+{% block body %}
+<div class="container">
+<div class="container marketing">
   <h1>Charge $10 with Stripe</h1>
  
-  <form action="{{ url_for('buy.register2')}}" method="POST" id="payment-form">
+  <form action="{{ url_for('buy.register')}}" method="POST" id="payment-form">
     <span class="payment-errors"></span>
     {{ form.csrf_token }}
         <div>{{ form.email.label }}: {{ form.email() }}</div>
@@ -78,8 +80,11 @@
       <span> / </span>
       <input type="text" size="4" data-stripe="exp-year"/>
     </div>
- 
+
     <button type="submit">Submit Payment</button>
   </form>
+  {% endblock %}
+ </div>
+ </div>
 </body>
 </html>

@@ -10,8 +10,9 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Carousel Template for Bootstrap</title>
+    <title>{% block title %}Learn To Code{% endblock %}</title>
 
+    {% block scriptstop %}
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
@@ -27,13 +28,14 @@
 
     <!-- Custom styles for this template -->
     <link href="../static/css/carousel.css" rel="stylesheet">
+    {% endblock %}
   </head>
 <!-- NAVBAR
 ================================================== -->
   <body>
   {% include "/navbar/_navbar.html" %}
 
-
+   {% block body %}
 
     <!-- Carousel
     ================================================== -->
@@ -172,7 +174,8 @@
 
     </div><!-- /.container -->
 
-
+ {% endblock %}
+ {% block scriptbottom %}
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -182,5 +185,6 @@
     <script src="../../assets/js/vendor/holder.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  {% endblock %}
   </body>
 </html>

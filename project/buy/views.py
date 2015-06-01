@@ -109,17 +109,27 @@ def utility_processor():
         return u'{0:.0f}'.format(100*int(amount))
     return dict(format_price=format_price)
 
-@buy_blueprint.route('/register2', methods=["GET", "POST"])
-def register2():
+
+"""
+@buy_blueprint.route('/register3', methods=["GET", "POST"])
+def register3():
+    course_id = request.form['product']
+    course = Course.query.get(course_id)
+    return render_template('register.html', course=course)
+"""
+
+
+@buy_blueprint.route('/register/', methods=["GET", "POST"])
+def register():
     stripe.api_key = "sk_test_66JgwFeJaEa0NNrxgBjv9Scr"
-    token = request.form['stripeToken']
     error = None
     form = EnrollmentForm(request.form)
     courses = Course.query.all()
-    course_id = request.form['product']
-    course = Course.query.get(course_id)
     if request.method == 'POST':
         if form.validate_on_submit():
+            token = request.form['stripeToken']
+            course_id = request.form['product']
+            course = Course.query.get(course_id)
             purchase = Purchase(uuid=str(uuid.uuid4()),
             email=form.email.data,
             product=form.product.data,
@@ -132,39 +142,12 @@ def register2():
                 description=form.email.data)
             db.session.add(purchase)
             db.session.commit()
+            return redirect(url_for('home.home'))
+        else:
+            return render_template('register.html',form=form, error=error)
 
-        return redirect(url_for('home.home'))
-    return render_template('register.html', courses=courses,form=form, error=error)
-
-
-
-
-
-
-@buy_blueprint.route('/register', methods=["GET", "POST"])
-def register():
-    stripe.api_key = "sk_test_66JgwFeJaEa0NNrxgBjv9Scr"
-
-    error = None
-    form = EnrollmentForm(request.form)
-    courses = Course.query.all()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            purchase = Purchase(uuid=str(uuid.uuid4()),
-            email=form.email.data,
-            product=form.product.data,
-            payment_method = form.payment_method.data,
-            notes = form.notes.data)
-            charge = stripe.Charge.create(
-                amount=int(int(course.price) * 100),
-                currency='cad',
-                card=token,
-                description=form.email.data)
-        db.session.add(purchase)
-        db.session.commit()
-
-        return redirect(url_for('home.home'))
-    return render_template('register.html', courses=courses,form=form, error=error)
+    else:
+        return render_template('register.html',form=form, error=error)
 
 
 
@@ -193,9 +176,25 @@ def buy():
     db.session.add(purchase)
     db.session.commit()
     subject='Thanks for your purchase!'
-    html=render_template("purchase.html")
+    html=""""<html><body><h1>Thanks for registering for {}</h1>
+    <p>A member of our team will follow up with you to get the complete details for your child.<p>
+    <p>Course Name: {}</h2>
+    <p>Course Price: ${}</p>
+    <p>Course Description: {}</p>
+    <p>Course Location: {}</p>
+    <p>Start Date: {}</p>
+    <p>End Date: {}</p>
+    <p>Start Time: {}</p>
+    <p>End Time: {}</p>""".format(course.course_name, course.course_name,
+        course.price, course.course_description,
+        course.course_location,
+        course.start_date,
+        course.start_date,
+        course.start_time,
+        course.end_time
+    )
     send_email(email, subject, html)
-    return redirect(url_for('users.login'))
+    return redirect(url_for('home.home'))
 
 
 @buy_blueprint.route('/test')

@@ -19,19 +19,14 @@
           <p>end_time: {{ course.end_time }}</p>
           <p>max_number_students: {{ course.max_number_students }}</p>
           <p>spaces_left:  {{ course.spaces_left }}</p>
-
-
-
-
-          </p>
           {% if course.spaces_left > 0 %}
             <form action="{{ url_for('buy.buy')}}" method="POST">
              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key={{key}}
               data-amount= {{format_price(course.price)}}
-              data-name="Super teacher"
-              data-label="Great  Dancing"
-              data-description="Learn to Dance">
+              data-name="Location: {{ course.course_location }}"
+              data-label= "Register for: {{course.course_name}}"
+              data-description="Start Date: {{course.start_date}}">
              </script>
              {% else %}
              <p>No more space</p>

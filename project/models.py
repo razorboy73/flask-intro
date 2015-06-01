@@ -39,7 +39,7 @@ class Course(db.Model):
 
 
     def __repr__(self):
-        return "<course name {}>".format(self.course_name)
+        return "Course Name: {}  Price: ${}".format(self.course_name, self.price)
 
 
 class Purchase(db.Model):
