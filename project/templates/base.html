@@ -35,6 +35,7 @@
 
 </head>
 <body>
+
 <!-- MODALS -->
 
 <!-- MOBILE MENU - Option 2 -->
@@ -106,6 +107,7 @@
 
 <!-- MAIN WRAPPER -->
 <div class="body-wrap">
+{% block page_content %}
     <!-- This section is only for demonstration purpose only. Check out the docs for more informations" -->
     <div id="divStyleSwitcher" class="style-switcher-slidebar">
     <a href="#" id="cmdShowStyleSwitcher" class="open-panel hidden-xs"><i class="fa fa-cog"></i></a>
@@ -1487,6 +1489,8 @@
             </div>
         </div>
     </section>
+
+    {% endblock %}
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
@@ -1631,4 +1635,5 @@
 
 
 </body>
+
 </html> 

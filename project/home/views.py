@@ -4,9 +4,9 @@
 from functools import wraps # pragma: no cover
 from flask import Blueprint, render_template,request, flash,redirect, url_for, current_app # pragma: no cover
 from flask.ext.login import login_required, current_user # pragma: no cover
-from forms import MessageForm # pragma: no cover
+from forms import CourseForm # pragma: no cover
 from project import db # pragma: no cover
-from project.models import BlogPost,Course # pragma: no cover
+from project.models import Course # pragma: no cover
 from project.decorators import check_confirmed
 import os
 from werkzeug import secure_filename
@@ -77,9 +77,9 @@ def home():
     # return "Hello, World!"  # return a string
     #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
     #posts = db.session.query(BlogPost).all()
-    stripe.api_key = "sk_test_66JgwFeJaEa0NNrxgBjv9Scr"
+
     courses = Course.query.all()
-    return render_template('base.html', courses=courses )  # render a templates , form=form, posts=posts
+    return render_template('base.html', courses=courses, key=stripe_keys['publishable_key'] )  # render a templates , form=form, posts=posts
 
 @home_blueprint.route('/welcome')
 def welcome():
@@ -87,3 +87,48 @@ def welcome():
 
 
 
+@home_blueprint.route('/create', methods = ["GET", "POST"])
+
+def create():
+    # return "Hello, World!"  # return a string
+    error = None
+    form = CourseForm(request.form)
+    if form.validate_on_submit():
+        image = request.files['image']
+        filename = ''
+        if image and allowed_file(image.filename):
+            filename = image.filename
+            conn = S3Connection(
+            aws_access_key_id=current_app.config['AWS_ACCESS_KEY'],
+            aws_secret_access_key = current_app.config['AWS_SECRET_KEY']
+            )
+            bucket = conn.create_bucket(current_app.config['AWS_BUCKET'])
+            key = bucket.new_key(filename)
+            key.set_contents_from_file(image)
+            key.make_public()
+            key.set_metadata(
+            'Content-Type', 'image/' + filename.split('.')[-1].lower()
+            )
+        new_course = Course(form.course_name.data,
+                            form.course_description.data,
+                            form.course_location.data,
+                            form.start_date.data,
+                            form.end_date.data,
+                            form.start_time.data,
+                            form.end_time.data,
+                            form.max_number_students.data,
+                            form.spaces_left.data,
+                            form.is_active.data,
+                            form.price.data,
+                            form.age_range.data,
+                            filename,
+                            current_user.id)
+        db.session.add(new_course)
+        db.session.commit()
+        flash("New course was successfully posted.  Thanks.")
+        return redirect(url_for('home.home'))
+    else:
+        #posts = BlogPost.query.filter(BlogPost.user_id==current_user.id).all()
+        #posts = db.session.query(BlogPost).all()
+
+        return render_template('create.html', form=form )  # render a templates , form=form, posts=posts

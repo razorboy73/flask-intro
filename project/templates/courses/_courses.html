@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="owl-carousel owl-carousel-3">
-                    {% for course in courses %}
+                 {% for course in courses %}
                     <div class="item">
                         <div class="wp-block default">
                             <div class="figure">
@@ -23,7 +23,7 @@
                             </div>
                             <div class="wp-block-body bb">
                                 <h2 class="title">{{ course.course_name }}</h2>
-                                <h2 class="featurette-heading">Course Name: {{ course.course_name }}</h2>
+                                <h2>Course Name: {{ course.course_name }}</h2>
 
                                     <p>Max Number of Students: {{ course.max_number_students}}</p>
                                       <p>Spaces Left:  {{ course.spaces_left }}</p>

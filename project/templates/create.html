@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+
+<h3>Add A course</h3>
+    <br>
+    <form class="form-horizontal form-light" role ="form" method="post" action="/" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <p>{{ form.course_name(placeholder="Title") }}
+        <span class="error">
+        {% if form.course_name.errors %}
+            {% for error in form.course_name.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+     <p>{{ form.course_location (placeholder="Title") }}
+        <span class="error">
+        {% if form.course_location.errors %}
+            {% for error in form.course_location.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+     <p>{{ form.start_date (placeholder="Title") }}
+        <span class="error">
+        {% if form.start_date.errors %}
+            {% for error in form.start_date.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+      <p>{{ form.end_date (placeholder="Title") }}
+        <span class="error">
+        {% if form.end_date.errors %}
+            {% for error in form.end_date.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+      <p>{{ form.start_time(placeholder="Start Time") }}
+        <span class="error">
+        {% if form.start_time.errors %}
+            {% for error in form.start_time.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+    <p>{{ form.end_time(placeholder="End Time") }}
+        <span class="error">
+        {% if form.end_time.errors %}
+            {% for error in form.end_time.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+    <p>{{ form.max_number_students(placeholder="max_number_students") }}
+        <span class="error">
+        {% if form.max_number_students.errors %}
+            {% for error in form.max_number_students.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+        <p>{{ form.spaces_left(placeholder="spaces_left") }}
+        <span class="error">
+        {% if form.spaces_left.errors %}
+            {% for error in form.spaces_left.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+       <p>{{ form.is_active(placeholder="is_active") }}
+        <span class="error">
+        {% if form.is_active.errors %}
+            {% for error in form.is_active.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+        <p>{{ form.price(placeholder="price") }}
+        <span class="error">
+        {% if form.price.errors %}
+            {% for error in form.price.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+        <p>{{ form.age_range(placeholder="price") }}
+        <span class="error">
+        {% if form.age_range.errors %}
+            {% for error in form.age_range.errors %}
+                {{ error }}
+            {% endfor %}
+         {% endif %}
+        </span>
+       </p>
+
+        <p>{{ form.image_path(placeholder="Upload") }}</p>
+
+
+     <button class="btn btn-sm btn-success" type="submit">Post</button>
+
+</form>
+
+{% endblock %}

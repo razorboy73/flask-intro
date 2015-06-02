@@ -21,11 +21,13 @@ class Course(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     price = db.Column(db.Float, nullable=True)
     age_range = db.Column(db.String, nullable=True)
+    image_path = db.Column(db.String(255))
 
 
 
     def __init__(self, course_name=None, course_description=None, course_location=None,start_date=None,end_date=None,
-                start_time=None,end_time=None,max_number_students=None,spaces_left=None,is_active=None, price=None, age_range=None):
+                start_time=None,end_time=None,max_number_students=None,spaces_left=None,is_active=None, price=None, age_range=None,  image_path = None):
+
         self.course_name = course_name
         self.course_description=course_description
         self.course_location = course_location
@@ -38,6 +40,7 @@ class Course(db.Model):
         self.is_active = is_active
         self.price = price
         self.age_range = age_range
+        self.image_path = image_path
 
 
     def __repr__(self):
